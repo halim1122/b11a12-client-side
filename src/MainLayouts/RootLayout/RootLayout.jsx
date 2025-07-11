@@ -1,12 +1,14 @@
 import React from 'react';
 import { Outlet } from 'react-router';
+import Navbar from '../../Sheared/Header/Navbar';
+import Footer from '../../Sheared/Footer/Footer';
 
 const RootLayout = () => {
      return (
           <div>
-               header
+               <Navbar></Navbar>
                <Outlet></Outlet>
-               footer
+               <Footer></Footer>
           </div>
      );
 };

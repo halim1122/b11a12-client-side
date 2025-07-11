@@ -1,9 +1,14 @@
-import React from 'react';
+import Banner from "../../pages/HomePage/Banner";
+import Overview from "../../pages/HomePage/Overview";
+import TravelGuideSection from "../../pages/HomePage/TravelGuideSection";
+
 
 const HomeLayout = () => {
      return (
           <div>
-               jhf9sifkj
+               <Banner></Banner>
+               <Overview></Overview>
+               <TravelGuideSection></TravelGuideSection>
           </div>
      );
 };
