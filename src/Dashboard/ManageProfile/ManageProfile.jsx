@@ -75,7 +75,7 @@ const ManageProfile = () => {
      };
 
      return (
-          <div className="max-w-4xl mx-auto p-4 sm:p-6">
+          <div className="max-w-4xl lg:max-w-5xl mx-auto p-4 sm:p-6">
                <h1 className="text-2xl sm:text-3xl font-semibold mb-4 text-center sm:text-left">
                     Welcome, {user.displayName}!
                </h1>
@@ -85,13 +85,13 @@ const ManageProfile = () => {
                     <img
                          src={user.photoURL || "https://via.placeholder.com/100"}
                          alt="User"
-                         className="w-24 h-24 sm:w-28 sm:h-28 rounded-full shadow shadow-[#007777] object-cover"
+                         className="w-24 h-24 lg:w-80 lg:h-80 sm:w-28 sm:h-28 rounded-full shadow shadow-[#007777] object-cover"
                     />
-                    <div className="text-center md:text-left">
-                         <p><strong>Name:</strong> {user.displayName}</p>
-                         <p><strong>Email:</strong> {user.email}</p>
-                         <p><strong>Role:</strong> {user.role || 'user'}</p>
-                         <p><strong>Last Login:</strong> {new Date(user?.metadata?.lastSignInTime).toLocaleString()}</p>
+                    <div className="text-center md:text-left space-y-3">
+                         <p className="text-md md:text-2xl lg:text-3xl font-medium"><strong>Name:</strong> {user.displayName}</p>
+                         <p className="text-md md:text-2xl lg:text-3xl font-medium"><strong>Email:</strong> {user.email}</p>
+                         <p className="text-md md:text-2xl lg:text-3xl font-medium"><strong>Role:</strong> {user.role || 'user'}</p>
+                         <p className="text-md md:text-2xl lg:text-3xl font-medium"><strong>Last Login:</strong> {new Date(user?.metadata?.lastSignInTime).toLocaleString()}</p>
                     </div>
                </div>
 

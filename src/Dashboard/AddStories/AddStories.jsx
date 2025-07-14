@@ -4,12 +4,13 @@ import Swal from "sweetalert2";
 import axios from "axios";
 import useAuthContext from "../../Hook/useAuthContext";
 import useAxios from "../../Hook/useAxios";
+import { useState } from "react";
 
 const AddStories = () => {
      const { user } = useAuthContext();
      const navigate = useNavigate();
      const axiosInstance = useAxios();
-
+const [loading, setLoading] = useState(false);
      const {
           register,
           handleSubmit,
@@ -18,6 +19,7 @@ const AddStories = () => {
      } = useForm();
 
      const onSubmit = async (data) => {
+          setLoading(true)
           const images = data.images;
 
           if (!images || images.length === 0) {
@@ -53,7 +55,7 @@ const AddStories = () => {
                };
 
                const response = await axiosInstance.post("/stories", storyData);
-
+               console.log(storyData)
                if (response.data.insertedId) {
                     Swal.fire("Success", "Story added successfully!", "success");
                     reset(); // form reset
@@ -62,12 +64,14 @@ const AddStories = () => {
           } catch (err) {
                console.error(err);
                Swal.fire("Error", "Story upload failed", "error");
+          }finally{
+               setLoading(false);
           }
      };
 
      return (
           <div className="max-w-3xl mx-auto p-6">
-               <h2 className="text-3xl font-bold mb-6 text-center">Add New Story</h2>
+               <h2 className="text-3xl font-bold mb-6 text-[#007777] text-center">Add New Story</h2>
                <form onSubmit={handleSubmit(onSubmit)} className="bg-white p-6 rounded shadow space-y-4">
                     {/* Title */}
                     <div>
@@ -106,7 +110,7 @@ const AddStories = () => {
                          {errors.images && <span className="text-red-500 text-sm">At least one image is required</span>}
                     </div>
 
-                    <button type="submit" className="btn btn-primary w-full">Submit Story</button>
+                    <button type="submit" className="btn bg-[#007777] text-white w-full">{loading ? "Uploading..." : "Submit Story"}</button>
                </form>
           </div>
      );
