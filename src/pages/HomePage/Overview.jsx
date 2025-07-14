@@ -67,92 +67,72 @@ const TravelGuideSection = () => {
           },
      ];
 
-     // Inline style for bg with 50% opacity (using rgba)
-     const bgColorWithOpacity = 'rgba(0, 153, 153, 0.5)'; // #009999 with 50% opacity
-
      return (
-          <section
-               className="py-12 px-4 md:px-20 min-h-screen text-white"
-               style={{ backgroundColor: bgColorWithOpacity }}
-          >
-               <h2 className="text-3xl font-bold text-center mb-8">Tourism & Travel Guide</h2>
+    <section className="py-16 px-4 md:px-20">
+      <h2 className="text-4xl font-bold text-center mb-10 text-gray-800">Tourism & Travel Guide</h2>
 
-               <Tabs>
-                    <TabList className="flex justify-center space-x-6 border-b border-white/50 mb-6">
-                         <Tab
-                              className="cursor-pointer py-2 px-6 rounded-t-md text-lg font-semibold 
-              border-b-4 border-transparent
-              hover:text-white/80
-              selected:border-white
-              selected:text-white"
-                         >
-                              Our Packages
-                         </Tab>
-                         <Tab
-                              className="cursor-pointer py-2 px-6 rounded-t-md text-lg font-semibold 
-              border-b-4 border-transparent
-              hover:text-white/80
-              selected:border-white
-              selected:text-white"
-                         >
-                              Meet Our Tour Guides
-                         </Tab>
-                    </TabList>
+      <Tabs>
+        <TabList className="flex justify-center gap-6 mb-8">
+          <Tab className="btn btn-outline btn-accent">Our Packages</Tab>
+          <Tab className="btn btn-outline btn-accent">Meet Our Tour Guides</Tab>
+        </TabList>
 
-                    <TabPanel>
-                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                              {packages.map((pkg) => (
-                                   <div
-                                        key={pkg.id}
-                                        className="bg-white/10 p-4 rounded-md shadow-md hover:shadow-lg transition duration-300"
-                                   >
-                                        <img
-                                             src={pkg.photoUrl}
-                                             alt={pkg.title}
-                                             className="h-48 w-full object-cover rounded-md mb-4"
-                                             loading="lazy"
-                                        />
-                                        <h3 className="text-xl font-semibold mb-1 text-white">{pkg.title}</h3>
-                                        <p className="text-white/70 mb-2 uppercase">{pkg.tourType}</p>
-                                        <p className="text-lg font-bold mb-4 text-white">Tk {pkg.price.toLocaleString()}</p>
-                                        <Link
-                                             to={`/packages/${pkg.id}`}
-                                             className="inline-block bg-[#009999] hover:bg-[#007777] text-white px-4 py-2 rounded-md font-medium"
-                                        >
-                                             View Package
-                                        </Link>
-                                   </div>
-                              ))}
-                         </div>
-                    </TabPanel>
+        {/* Packages */}
+        <TabPanel>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {packages.map(pkg => (
+              <div
+                key={pkg.id}
+                className="rounded-lg overflow-hidden shadow hover:shadow-xl border border-gray-200 transition"
+              >
+                <img
+                  src={pkg.photoUrl}
+                  alt={pkg.title}
+                  className="h-52 w-full object-cover"
+                />
+                <div className="p-4 space-y-2">
+                  <h3 className="text-xl font-semibold text-gray-800">{pkg.title}</h3>
+                  <p className="text-sm text-gray-500 uppercase">{pkg.tourType}</p>
+                  <p className="text-lg font-bold text-[#009999]">Tk {pkg.price.toLocaleString()}</p>
+                  <Link
+                    to={`/packages/${pkg.id}`}
+                    className="btn btn-sm bg-[#009999] hover:bg-[#007777] text-white mt-2"
+                  >
+                    View Package
+                  </Link>
+                </div>
+              </div>
+            ))}
+          </div>
+        </TabPanel>
 
-                    <TabPanel>
-                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                              {guides.map((guide) => (
-                                   <div
-                                        key={guide.id}
-                                        className="bg-white/10 p-6 rounded-md shadow-md text-center hover:shadow-lg transition duration-300"
-                                   >
-                                        <img
-                                             src={guide.photoUrl}
-                                             alt={guide.name}
-                                             className="mx-auto rounded-full w-40 h-40 object-cover mb-4 border-4 border-[#009999]"
-                                             loading="lazy"
-                                        />
-                                        <h3 className="text-xl font-semibold mb-1 text-white">{guide.name}</h3>
-                                        <p className="text-white/70 mb-4">{guide.role}</p>
-                                        <Link
-                                             to={`/guides/${guide.id}`}
-                                             className="inline-block bg-[#009999] hover:bg-[#007777] text-white px-4 py-2 rounded-md font-medium"
-                                        >
-                                             Details
-                                        </Link>
-                                   </div>
-                              ))}
-                         </div>
-                    </TabPanel>
-               </Tabs>
-          </section>
+        {/* Guides */}
+        <TabPanel>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {guides.map(guide => (
+              <div
+                key={guide.id}
+                className="rounded-lg p-5 border border-gray-200 shadow hover:shadow-xl transition text-center"
+              >
+                <img
+                  src={guide.photoUrl}
+                  alt={guide.name}
+                  className="w-32 h-32 object-cover rounded-full mx-auto border-4 border-[#009999] mb-4"
+                />
+                <h3 className="text-xl font-semibold text-gray-800">{guide.name}</h3>
+                <p className="text-gray-500">{guide.role}</p>
+                <Link
+                  to={`/guides/${guide.id}`}
+                  className="btn btn-sm bg-[#009999] hover:bg-[#007777] text-white mt-3"
+                >
+                  Details
+                </Link>
+              </div>
+            ))}
+          </div>
+        </TabPanel>
+      </Tabs>
+    </section>
      );
 };
 

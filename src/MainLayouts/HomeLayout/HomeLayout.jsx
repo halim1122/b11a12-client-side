@@ -1,6 +1,6 @@
 import Banner from "../../pages/HomePage/Banner";
 import Overview from "../../pages/HomePage/Overview";
-import TravelGuideSection from "../../pages/HomePage/TravelGuideSection";
+import TouristStorySection from "../../pages/HomePage/TouristStorySection";
 
 
 const HomeLayout = () => {
@@ -8,7 +8,7 @@ const HomeLayout = () => {
           <div>
                <Banner></Banner>
                <Overview></Overview>
-               <TravelGuideSection></TravelGuideSection>
+               {/* <TouristStorySection></TouristStorySection> */}
           </div>
      );
 };
