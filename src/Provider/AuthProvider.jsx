@@ -47,7 +47,6 @@ const AuthProvider = ({ children }) => {
      }, [])
 
      const userInfo = {
-          halim: 'dsiufheirufajskdnf',
           user,
           setUser,
           loading,

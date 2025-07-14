@@ -4,7 +4,7 @@ import { Link, NavLink, useNavigate } from "react-router";
 import useAuthContext from "../../Hook/useAuthContext";
 import Logo from "../Logo/Logo";
 import Container from "../Container/Containar";
-
+import { FiLogIn, FiLogOut } from "react-icons/fi";
 const Navbar = () => {
   const { user, signOutUser } = useAuthContext();
   const navigate = useNavigate();
@@ -61,10 +61,10 @@ const Navbar = () => {
                   alt="Profile"
                   title={user?.displayName}
                 />
-                <Link onClick={handleLogout}>Logout</Link>
+                <Link onClick={handleLogout} className="flex items-center gap-1">Logout<FiLogOut /></Link>
               </>
             ) : (
-              <Link to="/login">Login</Link>
+              <Link to="/login" className="flex items-center gap-1"><FiLogIn />Login</Link>
             )}
           </div>
         </div>

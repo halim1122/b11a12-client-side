@@ -16,9 +16,8 @@ const RegisterForm = () => {
      const fileInputRef = useRef();
      const axiosInstance = useAxios();
 
-
      const onSubmit = (data) => {
-          // console.log(data);
+          console.log(data);
           createUser(data.email, data.password)
                .then( async(res) => {
 
@@ -124,6 +123,10 @@ const RegisterForm = () => {
                                    <div>
                                         <label className="font-semibold">Name</label><br />
                                         <input {...register('name', { required: true })} type="text" className="input input-bordered w-full" placeholder="Name" />
+                                   </div>
+                                   <div className='hidden'>
+                                        <label className="font-semibold">Role</label><br />
+                                        <input {...register('role')} type="text" value='user' placeholder="Name" />
                                    </div>
                                    <div>
                                         <label className="font-semibold">Email</label><br />
