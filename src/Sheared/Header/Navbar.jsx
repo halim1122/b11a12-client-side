@@ -25,9 +25,9 @@ const Navbar = () => {
   const navLinks = (
     <>
       <li><NavLink to='/'>Home</NavLink></li>
-      <li><NavLink to='/sendParcel'>Community</NavLink></li>
-      <li><NavLink to='/coverage'>About Us</NavLink></li>
-      <li><NavLink to='/beARider'>Trips</NavLink></li>
+      <li><NavLink to='/community'>Community</NavLink></li>
+      <li><NavLink to='/aboutUs'>About Us</NavLink></li>
+      <li><NavLink to='/allTrips'>All Trips</NavLink></li>
       {user && <li><NavLink to='/dashboard'>Dashboard</NavLink></li>}
     </>
   );

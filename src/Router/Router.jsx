@@ -12,6 +12,10 @@ import AddStories from "../Dashboard/AddStories/AddStories";
 import JoinAsTourGuide from "../Dashboard/JoinAsTourGuide/JoinAsTourGuide";
 import PrivateProvider from "../Provider/PrivateProvider";
 import AddPackages from "../Dashboard/AddPackages/AddPackages";
+import Community from "../pages/Community/Community";
+import AllTrips from "../pages/AllTrips/AllTrips";
+import AboutUs from "../pages/AboutUs/AboutUs";
+import PackageDetailsPage from "../pages/PackageDetailsPage/PackageDetailsPage";
 
 export const router = createBrowserRouter([
      {
@@ -21,6 +25,23 @@ export const router = createBrowserRouter([
                {
                     index: true,
                     Component: HomeLayout
+               },{
+                    path:'community',
+                    Component: Community
+               },
+               {
+                    path: 'allTrips',
+                    Component: AllTrips
+               },
+               {
+                    path:'aboutUs',
+                    Component: AboutUs
+               },
+               {
+                    path: 'PackageDetails/:id',
+                    element: <PrivateProvider>
+                         <PackageDetailsPage></PackageDetailsPage>
+                    </PrivateProvider>
                }
           ]
      },
