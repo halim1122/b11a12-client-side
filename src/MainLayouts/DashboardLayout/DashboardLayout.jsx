@@ -133,6 +133,16 @@ const DashboardLayout = () => {
                 <FaUserTie /> Join As Tour Guide
               </NavLink>
             </li>
+            <li>
+              <NavLink
+                to="/dashboard/manageUsers"
+                className={({ isActive }) =>
+                  `flex items-center gap-2 px-3 py-2 rounded-md hover:bg-base-300 ${isActive ? "bg-[#007777] text-white" : ""}`
+                }
+              >
+                <FaUserTie /> Manage Users
+              </NavLink>
+            </li>
           </ul>
         </nav>
       </aside>

@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import useAuthContext from "../../Hook/useAuthContext";
+import useAxios from "../../Hook/useAxios";
 
 const JoinAsTourGuide = () => {
 
      const { user } = useAuthContext();
+     const axiosInstance = useAxios();
+     const [loading, setLoading] = useState(false);
 
      const {
           register,
@@ -14,22 +17,33 @@ const JoinAsTourGuide = () => {
           formState: { errors },
      } = useForm();
 
-     const onSubmit = (data) => {
+     const onSubmit = async (data) => {
+          setLoading(true)
+          try {
+               const allData = { ...data, userName: user.displayName, userEmail: user.email, photo: user.displayName }
 
-          const allData = {...data, userName: user.displayName, userEmail: user.email}
+               console.log("Submitted Data:", allData);
 
-          console.log("Submitted Data:", allData);
+               // TODO: Backend এ পাঠাতে পারেন এখানে
 
-          // TODO: Backend এ পাঠাতে পারেন এখানে
+               const response = await axiosInstance.post("/applications", allData);
+               if (response.data.insertedId) {
+                    Swal.fire({
+                         icon: "success",
+                         title: "Application Submitted!",
+                         text: "Thank you for applying as a Tour Guide. We will get back to you soon.",
+                         confirmButtonText: "OK",
+                    });
 
-          Swal.fire({
-               icon: "success",
-               title: "Application Submitted!",
-               text: "Thank you for applying as a Tour Guide. We will get back to you soon.",
-               confirmButtonText: "OK",
-          });
-
-          reset(); // Clear form after submission
+                    reset();
+               }
+          } catch (err) {
+               console.error(err);
+               Swal.fire("Error", "Story upload failed", "error");
+          } finally {
+               setLoading(false);
+          }
+          // Clear form after submission
      };
 
      return (
@@ -93,7 +107,7 @@ const JoinAsTourGuide = () => {
                     {/* Submit */}
                     <div className="text-right">
                          <button type="submit" className="btn text-white bg-[#007777]">
-                              Submit Application
+                              {loading ? "Uploading..." : "Submit Application"}
                          </button>
                     </div>
                </form>

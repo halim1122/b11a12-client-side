@@ -16,6 +16,7 @@ import Community from "../pages/Community/Community";
 import AllTrips from "../pages/AllTrips/AllTrips";
 import AboutUs from "../pages/AboutUs/AboutUs";
 import PackageDetailsPage from "../pages/PackageDetailsPage/PackageDetailsPage";
+import ManageUsers from "../Dashboard/ManageUsers/ManageUsers";
 
 export const router = createBrowserRouter([
      {
@@ -91,6 +92,10 @@ export const router = createBrowserRouter([
                {
                     path:'joinAsTourGuide',
                     Component: JoinAsTourGuide
+               },
+               {
+                    path:'manageUsers',
+                    Component: ManageUsers
                }
           ]
      }

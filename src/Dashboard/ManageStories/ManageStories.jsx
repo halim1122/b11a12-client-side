@@ -8,10 +8,10 @@ import useAxios from "../../Hook/useAxios";
 
 const ManageStories = () => {
      const [openModal, setOpenModal] = useState(false);
-const [activeStoryImages, setActiveStoryImages] = useState([]);
-const axiosInstance = useAxios();
+     const [activeStoryImages, setActiveStoryImages] = useState([]);
+     const axiosInstance = useAxios();
 
-     const { data: stories = [],isPending, refetch } = useQuery({
+     const { data: stories = [], isPending, refetch } = useQuery({
           queryKey: ["stories"],
           queryFn: async () => {
                const res = await axiosInstance.get("/stories");
@@ -19,8 +19,8 @@ const axiosInstance = useAxios();
           },
      });
 
-     if(isPending) {
-          return <LoadingSpinner/>;
+     if (isPending) {
+          return <LoadingSpinner />;
      }
 
      const handleDelete = async (id) => {
@@ -48,10 +48,10 @@ const axiosInstance = useAxios();
                               <figure>
                                    <div
                                         className={`grid overflow-hidden rounded ${story.images.length === 1
-                                                  ? "grid-cols-1 grid-rows-1"
-                                                  : story.images.length === 2
-                                                       ? "grid-cols-1 grid-rows-2"
-                                                       : "grid-cols-2 grid-rows-2"
+                                             ? "grid-cols-1 grid-rows-1"
+                                             : story.images.length === 2
+                                                  ? "grid-cols-1 grid-rows-2"
+                                                  : "grid-cols-2 grid-rows-2"
                                              } h-[250px] w-full gap-[2px]`}
                                    >
                                         {story.images.slice(0, 4).map((img, index) => {
@@ -82,29 +82,29 @@ const axiosInstance = useAxios();
                                    </div>
                               </figure>
                               {openModal && (
-  <dialog id="image_modal" className="modal modal-open">
-    <div className="modal-box max-w-4xl w-full">
-      <h3 className="font-bold text-lg mb-4">Story Images</h3>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 max-h-[70vh] overflow-y-auto">
-        {activeStoryImages.map((img, idx) => (
-          <img
-            key={idx}
-            src={img}
-            alt={`modal-img-${idx}`}
-            className="rounded w-full object-cover"
-          />
-        ))}
-      </div>
-      <div className="modal-action">
-        <form method="dialog">
-          <button className="btn" onClick={() => setOpenModal(false)}>
-            Close
-          </button>
-        </form>
-      </div>
-    </div>
-  </dialog>
-)}
+                                   <dialog id="image_modal" className="modal modal-open">
+                                        <div className="modal-box max-w-4xl w-full">
+                                             <h3 className="font-bold text-lg mb-4">Story Images</h3>
+                                             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 max-h-[70vh] overflow-y-auto">
+                                                  {activeStoryImages.map((img, idx) => (
+                                                       <img
+                                                            key={idx}
+                                                            src={img}
+                                                            alt={`modal-img-${idx}`}
+                                                            className="rounded w-full object-cover"
+                                                       />
+                                                  ))}
+                                             </div>
+                                             <div className="modal-action">
+                                                  <form method="dialog">
+                                                       <button className="btn" onClick={() => setOpenModal(false)}>
+                                                            Close
+                                                       </button>
+                                                  </form>
+                                             </div>
+                                        </div>
+                                   </dialog>
+                              )}
 
                               <div className="card-body">
                                    <h2 className="card-title">{story.title}</h2>
