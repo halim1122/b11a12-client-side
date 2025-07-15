@@ -3,19 +3,25 @@ import axios from "axios";
 import { useState } from "react";
 import { Link } from "react-router";
 import Swal from "sweetalert2";
+import LoadingSpinner from "../../Sheared/Loading/LoadingSpinner";
+import useAxios from "../../Hook/useAxios";
 
 const ManageStories = () => {
      const [openModal, setOpenModal] = useState(false);
 const [activeStoryImages, setActiveStoryImages] = useState([]);
+const axiosInstance = useAxios();
 
-
-     const { data: stories = [], refetch } = useQuery({
+     const { data: stories = [],isPending, refetch } = useQuery({
           queryKey: ["stories"],
           queryFn: async () => {
-               const res = await axios.get("http://localhost:5000/stories");
+               const res = await axiosInstance.get("/stories");
                return res.data;
           },
      });
+
+     if(isPending) {
+          return <LoadingSpinner/>;
+     }
 
      const handleDelete = async (id) => {
           const confirm = await Swal.fire({

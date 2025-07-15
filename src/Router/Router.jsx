@@ -11,6 +11,7 @@ import ManageStories from "../Dashboard/ManageStories/ManageStories";
 import AddStories from "../Dashboard/AddStories/AddStories";
 import JoinAsTourGuide from "../Dashboard/JoinAsTourGuide/JoinAsTourGuide";
 import PrivateProvider from "../Provider/PrivateProvider";
+import AddPackages from "../Dashboard/AddPackages/AddPackages";
 
 export const router = createBrowserRouter([
      {
@@ -61,6 +62,10 @@ export const router = createBrowserRouter([
                {
                     path:'addStories',
                     Component: AddStories
+               },
+               {
+                    path:'addPackage',
+                    Component: AddPackages
                },
                {
                     path:'joinAsTourGuide',
