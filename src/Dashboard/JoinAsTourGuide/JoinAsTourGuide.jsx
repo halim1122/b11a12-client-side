@@ -20,7 +20,12 @@ const JoinAsTourGuide = () => {
      const onSubmit = async (data) => {
           setLoading(true)
           try {
-               const allData = { ...data, userName: user.displayName, userEmail: user.email, photo: user.displayName }
+               const allData = { ...data, 
+                    userName: user.displayName, 
+                    userEmail: user.email, 
+                    photo: user.displayName,
+                    role: 'user'
+                }
 
                console.log("Submitted Data:", allData);
 

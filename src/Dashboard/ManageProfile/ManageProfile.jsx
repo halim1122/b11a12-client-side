@@ -4,16 +4,26 @@ import Swal from "sweetalert2";
 import axios from "axios";
 import useAuthContext from "../../Hook/useAuthContext";
 import LoadingSpinner from "../../Sheared/Loading/LoadingSpinner";
+import { useQuery } from "@tanstack/react-query";
+import useAxios from "../../Hook/useAxios";
 
 const ManageProfile = () => {
      const { user } = useAuthContext();
      const navigate = useNavigate();
-
+     const axiosInstance = useAxios();
      const fileInputRef = useRef();
      const [modalOpen, setModalOpen] = useState(false);
      const [profilePic, setProfilePic] = useState(user?.photoURL || "");
      const [formData, setFormData] = useState({
           displayName: user?.displayName || "",
+     });
+
+     const { data: users = [], isLoading } = useQuery({
+          queryKey: ["users"],
+          queryFn: async () => {
+               const res = await axiosInstance.get(`/users/${user.email}`);
+               return res.data;
+          },
      });
 
      useEffect(() => {
@@ -28,7 +38,7 @@ const ManageProfile = () => {
           }
      }, [user]);
 
-     if (!user) {
+     if (!user || isLoading) {
           return <LoadingSpinner />;
      }
 
@@ -90,7 +100,7 @@ const ManageProfile = () => {
                     <div className="text-center md:text-left space-y-3">
                          <p className="text-md md:text-2xl lg:text-3xl font-medium"><strong>Name:</strong> {user.displayName}</p>
                          <p className="text-md md:text-2xl lg:text-3xl font-medium"><strong>Email:</strong> {user.email}</p>
-                         <p className="text-md md:text-2xl lg:text-3xl font-medium"><strong>Role:</strong> {user.role || 'user'}</p>
+                         <p className="text-md md:text-2xl lg:text-3xl font-medium"><strong>Role:</strong> {users.role}</p>
                          <p className="text-md md:text-2xl lg:text-3xl font-medium"><strong>Last Login:</strong> {new Date(user?.metadata?.lastSignInTime).toLocaleString()}</p>
                     </div>
                </div>

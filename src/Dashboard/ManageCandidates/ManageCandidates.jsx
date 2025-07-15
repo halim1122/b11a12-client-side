@@ -17,14 +17,22 @@ const ManageCandidates = () => {
 
      const acceptMutation = useMutation({
           mutationFn: async ({ user, id }) => {
-               await axiosInstance.patch(`/users/role/${user.email}`, { role: "guide" });
-               await axiosInstance.delete(`/applications/${id}`);
+               try {
+                    await axiosInstance.patch(`/users/role/${user}`);
+                    await axiosInstance.delete(`/applications/${id}`);
+               } catch (error) {
+                    console.error("Mutation failed:", error);
+                    throw error;
+               }
           },
           onSuccess: () => {
                Swal.fire("Success", "Candidate accepted and promoted to Tour Guide!", "success");
                queryClient.invalidateQueries({ queryKey: ["applications"] });
                queryClient.invalidateQueries({ queryKey: ["users"] });
           },
+          onError: (error) => {
+               Swal.fire("Error", error?.response?.data?.message || "Something went wrong", "error");
+          }
      });
 
      const rejectMutation = useMutation({
@@ -35,24 +43,34 @@ const ManageCandidates = () => {
           },
      });
 
+     const handleReadMore = (text) => {
+          Swal.fire({
+               title: "Why Wants to be a Tour Guide",
+               html: `<div style="text-align: left;">${text}</div>`,
+               confirmButtonColor: "#007777"
+          });
+     };
+
      return (
-          <div className="p-4 md:p-8 bg-white rounded-lg shadow max-w-7xl mx-auto">
-               <h2 className="text-2xl font-bold text-[#007777] mb-6 text-center">Manage Tour Guide Candidates</h2>
-               <div className="overflow-x-auto">
-                    <table className="table w-full">
-                         <thead className="bg-[#007777] text-white">
-                              <tr>
-                                   <th>#</th>
-                                   <th>Photo</th>
-                                   <th>Name</th>
-                                   <th>Email</th>
-                                   <th>Why Guide?</th>
-                                   <th>CV Link</th>
-                                   <th>Actions</th>
-                              </tr>
-                         </thead>
-                         <tbody>
-                              {candidates.map((c, index) => (
+          <div className="overflow-x-auto">
+               <table className="table w-full">
+                    <thead className="bg-[#007777] text-white">
+                         <tr>
+                              <th>#</th>
+                              <th>Photo</th>
+                              <th>Name</th>
+                              <th>Email</th>
+                              <th>Why Guide?</th>
+                              <th>CV Link</th>
+                              <th>Actions</th>
+                         </tr>
+                    </thead>
+                    <tbody>
+                         {candidates.map((c, index) => {
+                              const slicedText = c.reason.length > 100 ? c.reason.slice(0, 40) + "..." : c.reason;
+                              const isLong = c.reason.length > 100;
+
+                              return (
                                    <tr key={c._id} className="hover:bg-[#f0fafa]">
                                         <td>{index + 1}</td>
                                         <td>
@@ -67,8 +85,19 @@ const ManageCandidates = () => {
                                              />
                                         </td>
                                         <td>{c.userName}</td>
-                                        <td>{c.userEmail}</td>
-                                        <td className="max-w-xs text-sm">{c.reason}</td>
+                                        <td className="">{c.userEmail}</td>
+                                        <td className="text-sm">
+                                             {slicedText}
+                                             {isLong && (
+                                                  <span
+                                                       onClick={() => handleReadMore(c.reason)}
+                                                       className="text-blue-600 cursor-pointer ml-1 underline"
+                                                  >
+                                                       Read More
+                                                  </span>
+                                             )}
+                                        </td>
+
                                         <td>
                                              <a
                                                   href={c.cvLink}
@@ -76,13 +105,13 @@ const ManageCandidates = () => {
                                                   rel="noreferrer"
                                                   className="text-blue-600 underline"
                                              >
-                                                  View CV
+                                                  ViewCV
                                              </a>
                                         </td>
                                         <td className="flex gap-2">
                                              <button
                                                   className="btn btn-success btn-sm"
-                                                  onClick={() => acceptMutation.mutate({ user: c, id: c._id })}
+                                                  onClick={() => acceptMutation.mutate({ user: c.userEmail, id: c._id })}
                                              >
                                                   Accept
                                              </button>
@@ -94,15 +123,15 @@ const ManageCandidates = () => {
                                              </button>
                                         </td>
                                    </tr>
-                              ))}
-                         </tbody>
-                    </table>
+                              );
+                         })}
+                    </tbody>
+               </table>
 
-                    {isLoading && <LoadingSpinner />}
-               </div>
-
+               {isLoading && <LoadingSpinner />}
           </div>
      );
 };
+
 
 export default ManageCandidates;

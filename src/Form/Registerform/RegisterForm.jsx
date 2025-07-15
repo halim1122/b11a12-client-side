@@ -11,20 +11,23 @@ import SocielGoogle from '../../Sheared/Sociel/SocielGoogle';
 const RegisterForm = () => {
      const { register, formState: { errors }, handleSubmit } = useForm();
      const { createUser, setUser, updateUserProfile } = useContext(AuthContext);
+     const [registering, setRegistering] = useState(false)
      const [profilePic, setProfilePic] = useState('')
      const navigate = useNavigate();
      const fileInputRef = useRef();
      const axiosInstance = useAxios();
 
      const onSubmit = (data) => {
+          setRegistering(true)
           console.log(data);
           createUser(data.email, data.password)
-               .then( async(res) => {
+               .then(async (res) => {
 
                     const userInfo = {
                          email: data.email,
                          displayName: data?.name,
                          role: 'user', //default role
+                         photoURL: profilePic,
                          created_at: new Date().toISOString(),
                          last_login: new Date().toISOString(),
                     }
@@ -42,6 +45,7 @@ const RegisterForm = () => {
                               console.log('profile updated')
                               setUser(res.user);
                               console.log(res.user)
+                              setRegistering(false)
                               navigate('/')
                          }).catch(error => {
                               console.log(error)
@@ -100,7 +104,7 @@ const RegisterForm = () => {
 
                                         {/* Image that triggers file input */}
                                         <img
-                                             src={photourl}
+                                             src={profilePic ? `${profilePic}`: photourl} // fallback image
                                              alt="Profile"
                                              onClick={handleImageClick}
                                              className="w-12 h-12 rounded-full border-2 border-primary cursor-pointer hover:opacity-80 transition"
@@ -110,10 +114,13 @@ const RegisterForm = () => {
                                         <input
                                              type="file"
                                              accept="image/*"
-                                             ref={fileInputRef}
+                                             {...register("photo", { required: true })}
+                                             ref={(e) => {
+                                                  register("photo").ref(e);
+                                                  fileInputRef.current = e; // manually assign ref
+                                             }}
                                              onChange={handleFileChange}
                                              className="hidden"
-                                             required
                                         />
                                    </div>
                                    {/* <div>
@@ -150,7 +157,7 @@ const RegisterForm = () => {
                                              <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>
                                         )}
                                    </div>
-                                   <button type="submit" className="btn bg-[#acd81d] w-full text-white">Register</button>
+                                   <button type="submit" className="btn bg-[#acd81d] w-full text-white">{registering ? 'Registering...' : 'Register'}</button>
                               </form>
 
                               <p className="mt-4 text-center md:text-left">

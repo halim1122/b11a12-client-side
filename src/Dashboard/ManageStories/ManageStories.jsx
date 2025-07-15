@@ -47,15 +47,15 @@ const ManageStories = () => {
                          <div key={story._id} className="card bg-base-400 shadow-xl">
                               <figure>
                                    <div
-                                        className={`grid overflow-hidden rounded ${story.images.length === 1
+                                        className={`grid overflow-hidden rounded ${story?.images?.length === 1
                                              ? "grid-cols-1 grid-rows-1"
-                                             : story.images.length === 2
+                                             : story?.images?.length === 2
                                                   ? "grid-cols-1 grid-rows-2"
                                                   : "grid-cols-2 grid-rows-2"
                                              } h-[250px] w-full gap-[2px]`}
                                    >
-                                        {story.images.slice(0, 4).map((img, index) => {
-                                             const isLast = index === 3 && story.images.length > 4;
+                                        {story.images?.slice(0, 4).map((img, index) => {
+                                             const isLast = index === 3 && story.images?.length > 4;
 
                                              return (
                                                   <div

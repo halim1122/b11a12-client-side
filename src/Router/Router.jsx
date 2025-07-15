@@ -17,6 +17,7 @@ import AllTrips from "../pages/AllTrips/AllTrips";
 import AboutUs from "../pages/AboutUs/AboutUs";
 import PackageDetailsPage from "../pages/PackageDetailsPage/PackageDetailsPage";
 import ManageUsers from "../Dashboard/ManageUsers/ManageUsers";
+import ManageCandidates from "../Dashboard/ManageCandidates/ManageCandidates";
 
 export const router = createBrowserRouter([
      {
@@ -96,6 +97,10 @@ export const router = createBrowserRouter([
                {
                     path:'manageUsers',
                     Component: ManageUsers
+               },
+               {
+                    path:'manageCandidates',
+                    Component: ManageCandidates
                }
           ]
      }

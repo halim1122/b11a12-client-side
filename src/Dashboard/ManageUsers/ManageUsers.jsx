@@ -15,6 +15,7 @@ const ManageUsers = () => {
       return res.data;
     },
   });
+//   console.log(users[0].image)
 
   const roleOptions = [
     { value: "all", label: "All Roles" },
@@ -77,7 +78,7 @@ const ManageUsers = () => {
                 <td>{index + 1}</td>
                 <td>
                   <img
-                    src={user.photoURL || "https://i.ibb.co/4f3QW4J/user.png"}
+                    src={user?.photoURL}
                     className="w-10 h-10 rounded-full object-cover"
                     alt="User"
                   />

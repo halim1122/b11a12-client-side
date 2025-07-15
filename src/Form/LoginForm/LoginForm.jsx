@@ -27,11 +27,12 @@ const LoginForm = () => {
   // console.log(user.displayName)
 
   const handleGoogleLogin = () => {
-    googleLogin().then( async(res)=> {
+    googleLogin().then(async (res) => {
       const userInfo = {
         email: res.user.email,
         displayName: res?.user?.displayName,
         role: 'user', //default role
+        photoURL:res?.user?.photoURL,
         created_at: new Date().toISOString(),
         last_login: new Date().toISOString(),
       }
