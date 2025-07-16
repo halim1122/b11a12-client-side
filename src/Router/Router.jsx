@@ -20,6 +20,7 @@ import TourGuideProfilePage from "../pages/TourGuideProfilePage/TourGuideProfile
 import AllStories from "../pages/AllStoies/AllStories";
 import BookingForm from "../Form/BookingForm/BookingForm";
 import MyBooking from "../Dashboard/MyBooking/MyBooking";
+import Payment from "../Form/Payment/Payment";
 
 export const router = createBrowserRouter([
      {
@@ -85,6 +86,10 @@ export const router = createBrowserRouter([
                {
                     path:'myBookings',
                     Component: MyBooking
+               },
+               {
+                    path:'payment/:bookingId',
+                    Component: Payment
                },
                {
                     path:'manageStories',
