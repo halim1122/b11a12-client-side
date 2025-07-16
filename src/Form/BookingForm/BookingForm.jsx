@@ -25,7 +25,7 @@ const BookingForm = () => {
           formState: { errors },
      } = useForm();
 
-     console.log(selectedPackage)
+     // console.log(selectedPackage)
 
      const { data: guides = [], isLoading } = useQuery({
           queryKey: ["tour-guides"],
@@ -65,7 +65,7 @@ const BookingForm = () => {
                     confirmButtonText: "Go to My Bookings",
                }).then((result) => {
                     if (result.isConfirmed) {
-                         navigate("/dashboard/myBooking");
+                         navigate("/dashboard/myBookings");
                     }
                });
           } catch (err) {

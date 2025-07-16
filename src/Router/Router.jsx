@@ -6,7 +6,6 @@ import LoginForm from "../Form/LoginForm/LoginForm";
 import RegisterForm from "../Form/Registerform/RegisterForm";
 import DashboardLayout from "../MainLayouts/DashboardLayout/DashboardLayout";
 import ManageProfile from "../Dashboard/ManageProfile/ManageProfile";
-import MyBookings from "../Dashboard/MyBookings/MyBookings";
 import ManageStories from "../Dashboard/ManageStories/ManageStories";
 import AddStories from "../Dashboard/AddStories/AddStories";
 import JoinAsTourGuide from "../Dashboard/JoinAsTourGuide/JoinAsTourGuide";
@@ -20,6 +19,7 @@ import ManageCandidates from "../Dashboard/ManageCandidates/ManageCandidates";
 import TourGuideProfilePage from "../pages/TourGuideProfilePage/TourGuideProfilePage";
 import AllStories from "../pages/AllStoies/AllStories";
 import BookingForm from "../Form/BookingForm/BookingForm";
+import MyBooking from "../Dashboard/MyBooking/MyBooking";
 
 export const router = createBrowserRouter([
      {
@@ -84,7 +84,7 @@ export const router = createBrowserRouter([
                },
                {
                     path:'myBookings',
-                    Component: MyBookings
+                    Component: MyBooking
                },
                {
                     path:'manageStories',
