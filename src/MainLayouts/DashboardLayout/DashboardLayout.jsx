@@ -153,6 +153,16 @@ const DashboardLayout = () => {
                 <FaUserTie /> Manage Candidates
               </NavLink>
             </li>
+            <li>
+              <NavLink
+                to="/dashboard/allStories"
+                className={({ isActive }) =>
+                  `flex items-center gap-2 px-3 py-2 rounded-md hover:bg-base-300 ${isActive ? "bg-[#007777] text-white" : ""}`
+                }
+              >
+                <FaUserTie /> All Stories
+              </NavLink>
+            </li>
           </ul>
         </nav>
       </aside>

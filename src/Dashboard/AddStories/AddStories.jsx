@@ -5,18 +5,32 @@ import axios from "axios";
 import useAuthContext from "../../Hook/useAuthContext";
 import useAxios from "../../Hook/useAxios";
 import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import LoadingSpinner from "../../Sheared/Loading/LoadingSpinner";
 
 const AddStories = () => {
      const { user } = useAuthContext();
      const navigate = useNavigate();
      const axiosInstance = useAxios();
-const [loading, setLoading] = useState(false);
+     const [loading, setLoading] = useState(false);
      const {
           register,
           handleSubmit,
           reset,
           formState: { errors },
      } = useForm();
+
+     const { data: guide = {}, isLoading } = useQuery({
+          queryKey: ["tourGuide", user.email],
+          queryFn: async () => {
+               const res = await axiosInstance.get(`/users/${user.email}`);
+               return res.data;
+          },
+          enabled: !!user.email,
+     });
+
+     if (isLoading) return <LoadingSpinner />;
+
 
      const onSubmit = async (data) => {
           setLoading(true)
@@ -50,6 +64,7 @@ const [loading, setLoading] = useState(false);
                          name: user.displayName,
                          email: user.email,
                          photo: user.photoURL || "",
+                         role: guide.role
                     },
                     created_at: new Date().toISOString(),
                };
@@ -64,7 +79,7 @@ const [loading, setLoading] = useState(false);
           } catch (err) {
                console.error(err);
                Swal.fire("Error", "Story upload failed", "error");
-          }finally{
+          } finally {
                setLoading(false);
           }
      };

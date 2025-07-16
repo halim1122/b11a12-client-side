@@ -8,7 +8,7 @@ const HomeLayout = () => {
           <div>
                <Banner></Banner>
                <Overview></Overview>
-               {/* <TouristStorySection></TouristStorySection> */}
+               <TouristStorySection></TouristStorySection>
           </div>
      );
 };

@@ -19,6 +19,7 @@ import PackageDetailsPage from "../pages/PackageDetailsPage/PackageDetailsPage";
 import ManageUsers from "../Dashboard/ManageUsers/ManageUsers";
 import ManageCandidates from "../Dashboard/ManageCandidates/ManageCandidates";
 import TourGuideProfilePage from "../pages/TourGuideProfilePage/TourGuideProfilePage";
+import AllStories from "../pages/AllStories/AllStories";
 
 export const router = createBrowserRouter([
      {
@@ -47,7 +48,7 @@ export const router = createBrowserRouter([
                     </PrivateProvider>
                },
                {
-                    path: 'tourGuideProfile/:id',
+                    path: 'tourGuideProfile/:email',
                     element: <PrivateProvider>
                          <TourGuideProfilePage></TourGuideProfilePage>
                     </PrivateProvider>
@@ -108,6 +109,10 @@ export const router = createBrowserRouter([
                {
                     path:'manageCandidates',
                     Component: ManageCandidates
+               },
+               {
+                    path:'allStories',
+                    Component: AllStories
                }
           ]
      }
