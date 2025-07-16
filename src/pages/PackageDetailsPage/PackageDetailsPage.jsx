@@ -1,4 +1,4 @@
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { useQuery } from "@tanstack/react-query";
 import useAxios from "../../Hook/useAxios";
 import LoadingSpinner from "../../Sheared/Loading/LoadingSpinner";
@@ -20,6 +20,14 @@ const PackageDetailsPage = () => {
                return res.data;
           },
      });
+
+     const navigate = useNavigate();
+
+     const handleBooking = () => {
+          navigate("/dashboard/bookingForm", {
+               state: { packageData: pkg },
+          });
+     };
 
      if (isLoading) return <LoadingSpinner />;
 
@@ -107,6 +115,14 @@ const PackageDetailsPage = () => {
                <section>
                     <TourGuidesSection></TourGuidesSection>
                </section>
+               <div>
+                    <button
+                         onClick={handleBooking}
+                         className="btn text-center bg-[#007777] text-white w-full"
+                    >
+                         Booking Now
+                    </button>
+               </div>
           </div>
      );
 };

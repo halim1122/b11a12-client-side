@@ -1,15 +1,22 @@
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Swal from "sweetalert2";
 import useAuthContext from "../../Hook/useAuthContext";
 import useAxios from "../../Hook/useAxios";
+import { useQuery } from "@tanstack/react-query";
+import LoadingSpinner from "../../Sheared/Loading/LoadingSpinner";
 
-const BookingForm = ({ selectedPackage, guides = [] }) => {
+const BookingForm = () => {
+     const location = useLocation();
+     const selectedPackage = location.state?.packageData;
+
+     console.log("Received Package Data:", selectedPackage);
      const { user } = useAuthContext();
      const axiosInstance = useAxios();
+     const [tourDate, setTourDate] = useState(null);
      const navigate = useNavigate();
 
      const {
@@ -18,7 +25,18 @@ const BookingForm = ({ selectedPackage, guides = [] }) => {
           formState: { errors },
      } = useForm();
 
-     const [tourDate, setTourDate] = useState(null);
+     console.log(selectedPackage)
+
+     const { data: guides = [], isLoading } = useQuery({
+          queryKey: ["tour-guides"],
+          queryFn: async () => {
+               const res = await axiosInstance.get("/users?role=tour-guide");
+               return res.data;
+          },
+     });
+
+     if (isLoading) return <LoadingSpinner />;
+
 
      const onSubmit = async (data) => {
           if (!user) {
@@ -47,7 +65,7 @@ const BookingForm = ({ selectedPackage, guides = [] }) => {
                     confirmButtonText: "Go to My Bookings",
                }).then((result) => {
                     if (result.isConfirmed) {
-                         navigate("/my-bookings");
+                         navigate("/dashboard/myBooking");
                     }
                });
           } catch (err) {
@@ -139,8 +157,8 @@ const BookingForm = ({ selectedPackage, guides = [] }) => {
                          >
                               <option value="">Select a Guide</option>
                               {guides.map((guide) => (
-                                   <option key={guide._id} value={guide.name}>
-                                        {guide.name}
+                                   <option key={guide._id} value={guide.displayName}>
+                                        {guide.displayName}
                                    </option>
                               ))}
                          </select>
