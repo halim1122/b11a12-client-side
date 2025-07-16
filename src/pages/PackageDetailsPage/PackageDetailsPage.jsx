@@ -3,7 +3,8 @@ import { useQuery } from "@tanstack/react-query";
 import useAxios from "../../Hook/useAxios";
 import LoadingSpinner from "../../Sheared/Loading/LoadingSpinner";
 import { useState } from "react";
-import { MdKeyboardArrowRight } from "react-icons/md";
+import { MdArrowRight } from "react-icons/md";
+import TourGuidesSection from "../TourGuidesSection/TourGuidesSection";
 
 const PackageDetailsPage = () => {
 
@@ -93,7 +94,7 @@ const PackageDetailsPage = () => {
               peer-checked:bg-accent-content/10 peer-checked:text-accent-content
                peer-checked:border-accent-content/50 peer-checked:border-t-2 peer-checked:border-r-2 peer-checked:border-l-2
               peer-checked:rounded-t-lg flex flex-row items-center">
-                                        <div className="bg-emerald-400 p-1 rounded-tr-full rounded-br-full">🟢 Day {index + 1} </div><MdKeyboardArrowRight className="font-medium h-8 w-8"/> {faq.title}
+                                        <div className="bg-emerald-400 p-1 rounded-md relative flex z-20 pr-2 flex-row mr-4"><MdArrowRight className="text-emerald-400 absolute h-14 w-14 bg-transparent -top-[10px] left-9" />Day {index + 1} </div> {faq.title}
                                    </div>
                                    <div className="collapse-content peer-checked:bg-accent-content/10  peer-checked:border-accent-content/50 peer-checked:border-b-2 peer-checked:border-r-2 peer-checked:border-l-2 peer-checked:text-gray-800 peer-checked:rounded-b-lg">
                                         <hr className='text-gray-400' />
@@ -103,6 +104,9 @@ const PackageDetailsPage = () => {
                          ))}
                     </div>
                </div>
+               <section>
+                    <TourGuidesSection></TourGuidesSection>
+               </section>
           </div>
      );
 };

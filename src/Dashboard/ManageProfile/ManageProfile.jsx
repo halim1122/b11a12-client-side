@@ -14,16 +14,15 @@ const ManageProfile = () => {
      const fileInputRef = useRef();
      const [modalOpen, setModalOpen] = useState(false);
      const [profilePic, setProfilePic] = useState(user?.photoURL || "");
-     const [formData, setFormData] = useState({
-          displayName: user?.displayName || "",
-     });
+     const [formData, setFormData] = useState({ displayName: user?.displayName || "" });
 
-     const { data: users = [], isLoading } = useQuery({
-          queryKey: ["users"],
+     const { data: dbUser = {}, isLoading, refetch } = useQuery({
+          queryKey: ["userRole", user?.email],
           queryFn: async () => {
                const res = await axiosInstance.get(`/users/${user.email}`);
                return res.data;
           },
+          enabled: !!user?.email
      });
 
      useEffect(() => {
@@ -73,21 +72,30 @@ const ManageProfile = () => {
           }
      };
 
-     const handleSubmit = (e) => {
+     const handleSubmit = async (e) => {
           e.preventDefault();
           const updatedData = {
                displayName: formData.displayName,
                photoURL: profilePic,
           };
-          console.log("Updated User Data:", updatedData);
-          // TODO: API call to update backend
-          setModalOpen(false);
+
+          try {
+               const res = await axiosInstance.patch(`/users/${user.email}`, updatedData);
+               if (res.data.modifiedCount > 0) {
+                    Swal.fire("Success!", "Profile Updated", "success");
+                    setModalOpen(false);
+                    refetch();
+               }
+          } catch (error) {
+               console.error("Profile update failed", error);
+               Swal.fire("Error", "Could not update profile", "error");
+          }
      };
 
      return (
           <div className="max-w-4xl lg:max-w-5xl mx-auto p-4 sm:p-6">
                <h1 className="text-2xl sm:text-3xl font-semibold mb-4 text-center sm:text-left">
-                    Welcome, {user.displayName}!
+                    Welcome, {dbUser.displayName}!
                </h1>
 
                {/* Profile Info */}
@@ -98,10 +106,10 @@ const ManageProfile = () => {
                          className="w-24 h-24 lg:w-80 lg:h-80 sm:w-28 sm:h-28 rounded-full shadow shadow-[#007777] object-cover"
                     />
                     <div className="text-center md:text-left space-y-3">
-                         <p className="text-md md:text-2xl lg:text-3xl font-medium"><strong>Name:</strong> {user.displayName}</p>
-                         <p className="text-md md:text-2xl lg:text-3xl font-medium"><strong>Email:</strong> {user.email}</p>
-                         <p className="text-md md:text-2xl lg:text-3xl font-medium"><strong>Role:</strong> {users.role}</p>
-                         <p className="text-md md:text-2xl lg:text-3xl font-medium"><strong>Last Login:</strong> {new Date(user?.metadata?.lastSignInTime).toLocaleString()}</p>
+                         <p className="text-md md:text-2xl lg:text-3xl font-medium"><strong>Name:</strong> {dbUser.displayName}</p>
+                         <p className="text-md md:text-2xl lg:text-3xl font-medium"><strong>Email:</strong> {dbUser.email}</p>
+                         <p className="text-md md:text-2xl lg:text-3xl font-medium"><strong>Role:</strong> {dbUser?.role || 'N/A'}</p>
+                         <p className="text-md md:text-2xl lg:text-3xl font-medium"><strong>Last Login:</strong> {new Date(dbUser.last_login).toLocaleString()}</p>
                     </div>
                </div>
 
@@ -173,7 +181,7 @@ const ManageProfile = () => {
                                         <label className="block mb-1 font-medium">Role (cannot edit)</label>
                                         <input
                                              type="text"
-                                             value={user.role}
+                                             value={dbUser?.role}
                                              disabled
                                              className="input input-bordered w-full bg-gray-100 cursor-not-allowed"
                                         />
@@ -187,7 +195,7 @@ const ManageProfile = () => {
                                         >
                                              Cancel
                                         </button>
-                                        <button type="submit" className="btn bg-[#007777] text-white">
+                                        <button type="submit" onSubmit={handleSubmit} className="btn bg-[#007777] text-white">
                                              Save
                                         </button>
                                    </div>

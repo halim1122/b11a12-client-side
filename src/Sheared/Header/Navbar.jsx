@@ -20,8 +20,6 @@ const Navbar = () => {
     signOutUser().then(() => navigate("/login")).catch(console.error);
   };
 
-  console.log(user?.photoURL)
-
   const navLinks = (
     <>
       <li><NavLink to='/'>Home</NavLink></li>

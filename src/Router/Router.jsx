@@ -18,6 +18,7 @@ import AboutUs from "../pages/AboutUs/AboutUs";
 import PackageDetailsPage from "../pages/PackageDetailsPage/PackageDetailsPage";
 import ManageUsers from "../Dashboard/ManageUsers/ManageUsers";
 import ManageCandidates from "../Dashboard/ManageCandidates/ManageCandidates";
+import TourGuideProfilePage from "../pages/TourGuideProfilePage/TourGuideProfilePage";
 
 export const router = createBrowserRouter([
      {
@@ -43,6 +44,12 @@ export const router = createBrowserRouter([
                     path: 'PackageDetails/:id',
                     element: <PrivateProvider>
                          <PackageDetailsPage></PackageDetailsPage>
+                    </PrivateProvider>
+               },
+               {
+                    path: 'tourGuideProfile/:id',
+                    element: <PrivateProvider>
+                         <TourGuideProfilePage></TourGuideProfilePage>
                     </PrivateProvider>
                }
           ]
