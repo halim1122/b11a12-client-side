@@ -68,7 +68,7 @@ const TouristStorySection = () => {
           </div>
         ))}
       </div>
-      <Link to="/dashboard/allStories" className="btn mt-8 btn-outline btn-sm sm:btn-md text-[#007777] border-[#007777] hover:bg-[#007777] hover:text-white">
+      <Link to="community" className="btn mt-8 btn-outline btn-sm sm:btn-md text-[#007777] border-[#007777] hover:bg-[#007777] hover:text-white">
         All Stories
       </Link>
     </div>

@@ -93,6 +93,16 @@ const DashboardLayout = () => {
                 <FaBook /> My Bookings
               </NavLink>
             </li>
+             <li>
+              <NavLink
+                to="/dashboard/paymentHistory"
+                className={({ isActive }) =>
+                  `flex items-center gap-2 px-3 py-2 rounded-md hover:bg-base-300 ${isActive ? "bg-[#007777] text-white" : ""}`
+                }
+              >
+                <FaBook /> Payment History
+              </NavLink>
+            </li>
             <li>
               <NavLink
                 to="/dashboard/manageStories"

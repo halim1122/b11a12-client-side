@@ -21,6 +21,7 @@ import AllStories from "../pages/AllStoies/AllStories";
 import BookingForm from "../Form/BookingForm/BookingForm";
 import MyBooking from "../Dashboard/MyBooking/MyBooking";
 import Payment from "../Form/Payment/Payment";
+import PaymentHistory from "../Dashboard/PaymentHistory/PaymentHistory";
 
 export const router = createBrowserRouter([
      {
@@ -30,8 +31,8 @@ export const router = createBrowserRouter([
                {
                     index: true,
                     Component: HomeLayout
-               },{
-                    path:'community',
+               }, {
+                    path: 'community',
                     Component: AllStories
                },
                {
@@ -39,7 +40,7 @@ export const router = createBrowserRouter([
                     Component: AllTrips
                },
                {
-                    path:'aboutUs',
+                    path: 'aboutUs',
                     Component: AboutUs
                },
                {
@@ -71,52 +72,56 @@ export const router = createBrowserRouter([
           ]
      },
      {
-          path:'/dashboard',
+          path: '/dashboard',
           element: <PrivateProvider>
                <DashboardLayout></DashboardLayout>
           </PrivateProvider>,
-          children:[
+          children: [
                {
                     index: true,
                     Component: HomeLayout,
-               },{
+               }, {
                     path: 'manageProfile',
                     Component: ManageProfile,
                },
                {
-                    path:'myBookings',
+                    path: 'myBookings',
                     Component: MyBooking
                },
                {
-                    path:'payment/:bookingId',
+                    path: 'payment/:bookingId',
                     Component: Payment
                },
                {
-                    path:'manageStories',
+                    path: 'paymentHistory',
+                    Component: PaymentHistory
+               },
+               {
+                    path: 'manageStories',
                     Component: ManageStories
                },
                {
-                    path:'addStories',
+                    path: 'addStories',
                     Component: AddStories
                },
                {
-                    path:'addPackage',
+                    path: 'addPackage',
                     Component: AddPackages
                },
                {
-                    path:'joinAsTourGuide',
+                    path: 'joinAsTourGuide',
                     Component: JoinAsTourGuide
                },
                {
-                    path:'manageUsers',
+                    path: 'manageUsers',
                     Component: ManageUsers
                },
                {
-                    path:'manageCandidates',
+                    path: 'manageCandidates',
                     Component: ManageCandidates
                },
                {
-                    path:'bookingForm',
+                    path: 'bookingForm',
                     Component: BookingForm
                }
           ]
