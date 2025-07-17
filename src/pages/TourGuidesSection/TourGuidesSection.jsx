@@ -1,10 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router";
-import useAxios from "../../Hook/useAxios";
+import useAxiosSecure from "../../Hook/useAxiosSecure";
 import LoadingSpinner from "../../Sheared/Loading/LoadingSpinner";
 
 const TourGuidesSection = () => {
-     const axiosInstance = useAxios();
+     const axiosInstance = useAxiosSecure();
      const navigate = useNavigate();
 
      const { data: guides = [], isLoading } = useQuery({

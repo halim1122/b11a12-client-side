@@ -5,10 +5,14 @@ import {
   FaUser,
   FaBook,
   FaPlusCircle,
-  FaUserTie
+  FaUserTie,
+  FaUsersCog,
+  FaRegListAlt
 } from "react-icons/fa";
-import { TbBrandStorybook } from "react-icons/tb";
 import { IoIosAddCircle } from "react-icons/io";
+import { TbBrandStorybook, TbUserSearch } from "react-icons/tb";
+import { MdPayment } from "react-icons/md";
+import Footer from "../../Sheared/Footer/Footer";
 
 const DashboardLayout = () => {
   return (
@@ -48,6 +52,7 @@ const DashboardLayout = () => {
         {/* Outlet renders nested routes */}
         <main className="p-4">
           <Outlet />
+          <Footer></Footer>
         </main>
       </div>
 
@@ -62,12 +67,14 @@ const DashboardLayout = () => {
           </div>
 
           {/* Menu Items */}
+
           <ul className="flex flex-col gap-1">
             <li>
               <NavLink
                 to="/"
                 className={({ isActive }) =>
-                  `flex items-center gap-2 px-3 py-2 rounded-md hover:bg-base-300 ${isActive ? "bg-[#007777] text-white" : ""}`
+                  `flex items-center gap-2 px-3 py-2 rounded-md hover:bg-base-300 ${isActive ? "bg-[#007777] text-white" : ""
+                  }`
                 }
               >
                 <FaHome /> Home
@@ -77,7 +84,8 @@ const DashboardLayout = () => {
               <NavLink
                 to="/dashboard/manageProfile"
                 className={({ isActive }) =>
-                  `flex items-center gap-2 px-3 py-2 rounded-md hover:bg-base-300 ${isActive ? "bg-[#007777] text-white" : ""}`
+                  `flex items-center gap-2 px-3 py-2 rounded-md hover:bg-base-300 ${isActive ? "bg-[#007777] text-white" : ""
+                  }`
                 }
               >
                 <FaUser /> Manage Profile
@@ -87,27 +95,41 @@ const DashboardLayout = () => {
               <NavLink
                 to="/dashboard/myBookings"
                 className={({ isActive }) =>
-                  `flex items-center gap-2 px-3 py-2 rounded-md hover:bg-base-300 ${isActive ? "bg-[#007777] text-white" : ""}`
+                  `flex items-center gap-2 px-3 py-2 rounded-md hover:bg-base-300 ${isActive ? "bg-[#007777] text-white" : ""
+                  }`
                 }
               >
-                <FaBook /> My Bookings
+                <FaRegListAlt /> My Bookings
               </NavLink>
             </li>
-             <li>
+            <li>
               <NavLink
                 to="/dashboard/paymentHistory"
                 className={({ isActive }) =>
-                  `flex items-center gap-2 px-3 py-2 rounded-md hover:bg-base-300 ${isActive ? "bg-[#007777] text-white" : ""}`
+                  `flex items-center gap-2 px-3 py-2 rounded-md hover:bg-base-300 ${isActive ? "bg-[#007777] text-white" : ""
+                  }`
                 }
               >
-                <FaBook /> Payment History
+                <MdPayment /> Payment History
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/dashboard/myAssignedTour"
+                className={({ isActive }) =>
+                  `flex items-center gap-2 px-3 py-2 rounded-md hover:bg-base-300 ${isActive ? "bg-[#007777] text-white" : ""
+                  }`
+                }
+              >
+                <FaBook /> My Assigned Tour
               </NavLink>
             </li>
             <li>
               <NavLink
                 to="/dashboard/manageStories"
                 className={({ isActive }) =>
-                  `flex items-center gap-2 px-3 py-2 rounded-md hover:bg-base-300 ${isActive ? "bg-[#007777] text-white" : ""}`
+                  `flex items-center gap-2 px-3 py-2 rounded-md hover:bg-base-300 ${isActive ? "bg-[#007777] text-white" : ""
+                  }`
                 }
               >
                 <TbBrandStorybook /> Manage Stories
@@ -117,7 +139,8 @@ const DashboardLayout = () => {
               <NavLink
                 to="/dashboard/addPackage"
                 className={({ isActive }) =>
-                  `flex items-center gap-2 px-3 py-2 rounded-md hover:bg-base-300 ${isActive ? "bg-[#007777] text-white" : ""}`
+                  `flex items-center gap-2 px-3 py-2 rounded-md hover:bg-base-300 ${isActive ? "bg-[#007777] text-white" : ""
+                  }`
                 }
               >
                 <IoIosAddCircle /> Add Package
@@ -127,7 +150,8 @@ const DashboardLayout = () => {
               <NavLink
                 to="/dashboard/addStories"
                 className={({ isActive }) =>
-                  `flex items-center gap-2 px-3 py-2 rounded-md hover:bg-base-300 ${isActive ? "bg-[#007777] text-white" : ""}`
+                  `flex items-center gap-2 px-3 py-2 rounded-md hover:bg-base-300 ${isActive ? "bg-[#007777] text-white" : ""
+                  }`
                 }
               >
                 <FaPlusCircle /> Add Stories
@@ -137,7 +161,8 @@ const DashboardLayout = () => {
               <NavLink
                 to="/dashboard/joinAsTourGuide"
                 className={({ isActive }) =>
-                  `flex items-center gap-2 px-3 py-2 rounded-md hover:bg-base-300 ${isActive ? "bg-[#007777] text-white" : ""}`
+                  `flex items-center gap-2 px-3 py-2 rounded-md hover:bg-base-300 ${isActive ? "bg-[#007777] text-white" : ""
+                  }`
                 }
               >
                 <FaUserTie /> Join As Tour Guide
@@ -147,20 +172,33 @@ const DashboardLayout = () => {
               <NavLink
                 to="/dashboard/manageUsers"
                 className={({ isActive }) =>
-                  `flex items-center gap-2 px-3 py-2 rounded-md hover:bg-base-300 ${isActive ? "bg-[#007777] text-white" : ""}`
+                  `flex items-center gap-2 px-3 py-2 rounded-md hover:bg-base-300 ${isActive ? "bg-[#007777] text-white" : ""
+                  }`
                 }
               >
-                <FaUserTie /> Manage Users
+                <FaUsersCog /> Manage Users
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/dashboard/manageProfileAdmin"
+                className={({ isActive }) =>
+                  `flex items-center gap-2 px-3 py-2 rounded-md hover:bg-base-300 ${isActive ? "bg-[#007777] text-white" : ""
+                  }`
+                }
+              >
+                <FaUsersCog /> Manage Profile Admin
               </NavLink>
             </li>
             <li>
               <NavLink
                 to="/dashboard/manageCandidates"
                 className={({ isActive }) =>
-                  `flex items-center gap-2 px-3 py-2 rounded-md hover:bg-base-300 ${isActive ? "bg-[#007777] text-white" : ""}`
+                  `flex items-center gap-2 px-3 py-2 rounded-md hover:bg-base-300 ${isActive ? "bg-[#007777] text-white" : ""
+                  }`
                 }
               >
-                <FaUserTie /> Manage Candidates
+                <TbUserSearch /> Manage Candidates
               </NavLink>
             </li>
           </ul>

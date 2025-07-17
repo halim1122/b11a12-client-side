@@ -1,7 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import Swal from "sweetalert2";
-import useAxios from "../../Hook/useAxios";
+import useAxiosSecure from "../../Hook/useAxiosSecure";
 import useAuthContext from "../../Hook/useAuthContext";
 import LoadingSpinner from "../../Sheared/Loading/LoadingSpinner";
 
@@ -12,7 +12,7 @@ const ManageStories = () => {
      const [editingStory, setEditingStory] = useState(null);
      const [editForm, setEditForm] = useState({ title: "", description: "" });
 
-     const axiosInstance = useAxios();
+     const axiosInstance = useAxiosSecure();
      const queryClient = useQueryClient();
      const { user } = useAuthContext();
      const { data: stories = [], isLoading, refetch } = useQuery({
@@ -25,7 +25,7 @@ const ManageStories = () => {
           enabled: !!user?.email,
      });
 
-     
+
      const updateMutation = useMutation({
           mutationFn: async ({ id, updatedData }) => {
                const res = await axiosInstance.patch(`/stories/${id}`, updatedData);

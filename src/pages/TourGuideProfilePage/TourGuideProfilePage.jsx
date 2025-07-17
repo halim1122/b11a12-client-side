@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useParams } from "react-router";
 import { useQuery } from "@tanstack/react-query";
-import useAxios from "../../Hook/useAxios";
+import useAxiosSecure from "../../Hook/useAxiosSecure";
 import LoadingSpinner from "../../Sheared/Loading/LoadingSpinner";
 import useAuthContext from "../../Hook/useAuthContext";
 import { IoArrowRedoOutline } from "react-icons/io5";
@@ -9,7 +9,7 @@ import { FacebookShareButton } from "react-share";
 
 const TourGuideProfilePage = () => {
      const { email } = useParams();
-     const axiosInstance = useAxios();
+     const axiosInstance = useAxiosSecure();
      const [openImageModal, setOpenImageModal] = useState(false);
      const [activeStoryImages, setActiveStoryImages] = useState([]);
 

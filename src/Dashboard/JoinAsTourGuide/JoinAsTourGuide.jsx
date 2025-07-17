@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import useAuthContext from "../../Hook/useAuthContext";
-import useAxios from "../../Hook/useAxios";
+import useAxiosSecure from "../../Hook/useAxiosSecure";
 
 const JoinAsTourGuide = () => {
 
      const { user } = useAuthContext();
-     const axiosInstance = useAxios();
+     const axiosInstance = useAxiosSecure();
      const [loading, setLoading] = useState(false);
 
      const {

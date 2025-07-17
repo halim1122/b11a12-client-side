@@ -3,11 +3,11 @@ import { Link, useNavigate } from 'react-router';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import Logo from '../../Sheared/Logo/Logo';
-import useAxios from '../../Hook/useAxios';
 import photourl from '../../assets/image-upload-icon.png'
 import photo from '../../assets/ChatGPT Image Jul 11, 2025, 02_03_06 AM.png'
 import { AuthContext } from '../../Provider/AuthProvider';
 import SocielGoogle from '../../Sheared/Sociel/SocielGoogle';
+import useAxiosSecure from '../../Hook/useAxiosSecure';
 const RegisterForm = () => {
      const { register, formState: { errors }, handleSubmit } = useForm();
      const { createUser, setUser, updateUserProfile } = useContext(AuthContext);
@@ -15,7 +15,7 @@ const RegisterForm = () => {
      const [profilePic, setProfilePic] = useState('')
      const navigate = useNavigate();
      const fileInputRef = useRef();
-     const axiosInstance = useAxios();
+     const axiosInstance = useAxiosSecure();
 
      const onSubmit = (data) => {
           setRegistering(true)

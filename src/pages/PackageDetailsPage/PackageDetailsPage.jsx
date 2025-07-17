@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from "react-router";
 import { useQuery } from "@tanstack/react-query";
-import useAxios from "../../Hook/useAxios";
+import useAxiosSecure from "../../Hook/useAxiosSecure";
 import LoadingSpinner from "../../Sheared/Loading/LoadingSpinner";
 import { useState } from "react";
 import { MdArrowRight } from "react-icons/md";
@@ -9,7 +9,7 @@ import TourGuidesSection from "../TourGuidesSection/TourGuidesSection";
 const PackageDetailsPage = () => {
 
      const { id } = useParams();
-     const axiosInstance = useAxios();
+     const axiosInstance = useAxiosSecure();
      const [activeStoryImages, setActiveStoryImages] = useState([]);
      const [openModal, setOpenModal] = useState(false);
 

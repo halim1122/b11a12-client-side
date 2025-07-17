@@ -1,11 +1,11 @@
 import { useNavigate } from "react-router";
 import useAuthContext from "../../Hook/useAuthContext";
-import useAxios from "../../Hook/useAxios";
+import useAxiosSecure from "../../Hook/useAxiosSecure";
 
 const SocielGoogle = () => {
 
   const { setUser, googleLogin } = useAuthContext();
-  const axiosInstance = useAxios();
+  const axiosInstance = useAxiosSecure();
   const navigate = useNavigate();
 
   const handleGoogleRegister = () => {

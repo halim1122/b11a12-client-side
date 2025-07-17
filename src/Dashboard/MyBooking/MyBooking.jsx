@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import useAuthContext from '../../Hook/useAuthContext';
-import useAxios from '../../Hook/useAxios';
 import { useNavigate } from 'react-router';
 import { useQuery } from '@tanstack/react-query';
 import Swal from 'sweetalert2';
 import LoadingSpinner from '../../Sheared/Loading/LoadingSpinner';
+import ConfettiComponent from '../../ConfettiComponent';
+import useAxiosSecure from '../../Hook/useAxiosSecure';
 
 const MyBooking = () => {
      const { user } = useAuthContext();
-     const axiosInstance = useAxios();
+     const axiosInstance = useAxiosSecure();
      const navigate = useNavigate();
      const [viewBooking, setViewBooking] = useState(null);
 
@@ -178,6 +179,7 @@ const MyBooking = () => {
                     </dialog>
 
                )}
+               {bookings.length === 3 && <ConfettiComponent/>}
           </div>
      );
 };

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import axios from "axios";
 import useAuthContext from "../../Hook/useAuthContext";
-import useAxios from "../../Hook/useAxios";
+import useAxiosSecure from "../../Hook/useAxiosSecure";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import LoadingSpinner from "../../Sheared/Loading/LoadingSpinner";
@@ -11,7 +11,7 @@ import LoadingSpinner from "../../Sheared/Loading/LoadingSpinner";
 const AddStories = () => {
      const { user } = useAuthContext();
      const navigate = useNavigate();
-     const axiosInstance = useAxios();
+     const axiosInstance = useAxiosSecure();
      const [loading, setLoading] = useState(false);
      const {
           register,

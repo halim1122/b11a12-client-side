@@ -1,10 +1,10 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import useAxios from "../../Hook/useAxios";
+import useAxiosSecure from "../../Hook/useAxiosSecure";
 import Swal from "sweetalert2";
 import LoadingSpinner from "../../Sheared/Loading/LoadingSpinner";
 
 const ManageCandidates = () => {
-     const axiosInstance = useAxios();
+     const axiosInstance = useAxiosSecure();
      const queryClient = useQueryClient();
 
      const { data: candidates = [], isLoading } = useQuery({

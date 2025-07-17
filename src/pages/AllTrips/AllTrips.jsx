@@ -11,7 +11,7 @@ import {
 } from "react-icons/fa";
 import { AiFillHeart } from "react-icons/ai";
 import LoadingSpinner from "../../Sheared/Loading/LoadingSpinner";
-import useAxios from "../../Hook/useAxios";
+import useAxiosSecure from "../../Hook/useAxiosSecure";
 import { Link } from "react-router";
 
 const renderStars = (rating) => {
@@ -32,7 +32,7 @@ const renderStars = (rating) => {
 };
 
 const AllTrips = () => {
-     const axiosInstance = useAxios();
+     const axiosInstance = useAxiosSecure();
 
      const { data: packages = [], isLoading } = useQuery({
           queryKey: ["packages"],

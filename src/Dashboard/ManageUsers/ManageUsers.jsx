@@ -1,10 +1,10 @@
 import { useState } from "react";
 import Select from "react-select";
 import { useQuery } from "@tanstack/react-query";
-import useAxios from "../../Hook/useAxios";
+import useAxiosSecure from "../../Hook/useAxiosSecure";
 
 const ManageUsers = () => {
-  const axiosInstance = useAxios();
+  const axiosInstance = useAxiosSecure();
   const [search, setSearch] = useState("");
   const [selectedRole, setSelectedRole] = useState({ value: "all", label: "All Roles" });
 

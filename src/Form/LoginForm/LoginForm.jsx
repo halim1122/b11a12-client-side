@@ -2,49 +2,65 @@ import { useForm } from 'react-hook-form';
 import photo from '../../assets/ChatGPT Image Jul 11, 2025, 02_03_06 AM.png';
 import useAuthContext from '../../Hook/useAuthContext';
 import { Link, useNavigate } from 'react-router';
-import useAxios from '../../Hook/useAxios';
 import Logo from '../../Sheared/Logo/Logo';
+import Swal from 'sweetalert2';
+import useAxiosSecure from '../../Hook/useAxiosSecure';
 
 const LoginForm = () => {
-
   const { register, formState: { errors }, handleSubmit } = useForm();
-  const { loginUser, googleLogin, setUser } = useAuthContext();
+  const { loginUser, googleLogin, PasswordReset, setUser } = useAuthContext();
   const navigate = useNavigate();
-  const axiosInstance = useAxios();
-
+  const axiosInstance = useAxiosSecure();
 
   const onSubmit = (data) => {
-    console.log(data);
     loginUser(data.email, data.password)
       .then(res => {
-        console.log(res);
         setUser(res.user);
-        navigate('/')
+        navigate('/');
       }).catch(error => {
         console.log(error);
-      })
-  }
-  // console.log(user.displayName)
+      });
+  };
 
   const handleGoogleLogin = () => {
     googleLogin().then(async (res) => {
       const userInfo = {
         email: res.user.email,
         displayName: res?.user?.displayName,
-        role: 'user', //default role
-        photoURL:res?.user?.photoURL,
+        role: 'user',
+        photoURL: res?.user?.photoURL,
         created_at: new Date().toISOString(),
         last_login: new Date().toISOString(),
-      }
+      };
 
       const userRes = await axiosInstance.post('/users', userInfo);
       console.log(userRes.data)
-      setUser(res.user)
+      setUser(res.user);
       navigate('/');
     }).catch(error => {
-      console.log(error)
-    })
-  }
+      console.log(error);
+    });
+  };
+
+  const handleForgotPassword = async () => {
+    const { value: email } = await Swal.fire({
+      title: 'Reset Password',
+      input: 'email',
+      inputLabel: 'Enter your email address',
+      inputPlaceholder: 'example@email.com',
+      showCancelButton: true
+    });
+
+    if (email) {
+      try {
+        await PasswordReset(email);
+        Swal.fire('Success', 'Password reset email sent!', 'success');
+      } catch (error) {
+        Swal.fire('Error', error.message, 'error');
+      }
+    }
+  };
+
   return (
     <div className="bg-white min-h-screen">
       <div className="ml-4 mt-4 md:ml-10 md:mt-10">
@@ -52,7 +68,6 @@ const LoginForm = () => {
       </div>
 
       <div className="flex flex-col lg:flex-row items-center justify-center px-4 md:px-10 py-8 gap-6">
-
         <div className="flex-1 flex justify-center">
           <div className="w-full max-w-[300px]">
             <h1 className="font-extrabold text-2xl md:text-4xl text-center md:text-left">Welcome Back</h1>
@@ -82,7 +97,7 @@ const LoginForm = () => {
                 )}
               </div>
               <div>
-                <a className="link link-hover text-gray-400">Forgot password?</a>
+                <button type="button" onClick={handleForgotPassword} className="link link-hover text-gray-400">Forgot password?</button>
               </div>
               <button type="submit" className="btn bg-[#acd81d] w-full text-white">Login</button>
             </form>

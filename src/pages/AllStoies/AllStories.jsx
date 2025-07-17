@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import Swal from "sweetalert2";
-import useAxios from "../../Hook/useAxios";
+import useAxiosSecure from "../../Hook/useAxiosSecure";
 import useAuthContext from "../../Hook/useAuthContext";
 import LoadingSpinner from "../../Sheared/Loading/LoadingSpinner";
 import { FacebookShareButton } from "react-share";
@@ -10,7 +10,7 @@ import { IoArrowRedoOutline } from "react-icons/io5";
 const AllStories = () => {
      const [openImageModal, setOpenImageModal] = useState(false);
      const [activeStoryImages, setActiveStoryImages] = useState([]);
-     const axiosInstance = useAxios();
+     const axiosInstance = useAxiosSecure();
      const { user } = useAuthContext();
 
      const { data: stories = [], isLoading } = useQuery({

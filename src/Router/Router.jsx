@@ -22,6 +22,8 @@ import BookingForm from "../Form/BookingForm/BookingForm";
 import MyBooking from "../Dashboard/MyBooking/MyBooking";
 import Payment from "../Form/Payment/Payment";
 import PaymentHistory from "../Dashboard/PaymentHistory/PaymentHistory";
+import MyAssignedTours from "../Dashboard/MyAssignedTours/MyAssignedTours";
+import ManageProfileAdmin from "../Dashboard/ManageProfileAdmin/ManageProfileAdmin";
 
 export const router = createBrowserRouter([
      {
@@ -123,6 +125,14 @@ export const router = createBrowserRouter([
                {
                     path: 'bookingForm',
                     Component: BookingForm
+               },
+               {
+                    path:'myAssignedTour',
+                    Component: MyAssignedTours
+               },
+               {
+                    path:'manageProfileAdmin',
+                    Component: ManageProfileAdmin
                }
           ]
      }

@@ -4,8 +4,8 @@ import { useNavigate, useParams } from 'react-router';
 import { useQuery } from '@tanstack/react-query';
 import Swal from 'sweetalert2';
 import useAuthContext from '../../Hook/useAuthContext';
-import useAxios from '../../Hook/useAxios';
 import LoadingSpinner from '../../Sheared/Loading/LoadingSpinner';
+import useAxiosSecure from '../../Hook/useAxiosSecure';
 
 
 const PaymentForm = () => {
@@ -15,8 +15,9 @@ const PaymentForm = () => {
      const navigate = useNavigate();
      const { user } = useAuthContext();
      const { bookingId } = useParams();
-     const axiosInstance = useAxios();
+     const axiosInstance = useAxiosSecure();
      const [error, setError] = useState('');
+     const [paymenting, setPaymenting] = useState(false);
 
 
 
@@ -40,6 +41,7 @@ const PaymentForm = () => {
      const amountInCents = amount * 100;
 
      const handleSubmit = async (e) => {
+          setPaymenting(true)
           e.preventDefault();
           if (!stripe || !elements) {
                return;
@@ -98,6 +100,7 @@ const PaymentForm = () => {
 
                     const PaymentRes = await axiosInstance.post('/payments', paymentDoc);
                     if (PaymentRes?.data?.insertedId) {
+                         setPaymenting(false);
                          Swal.fire({
                               title: "Payment successful",
                               html: `<strong>Transaction ID:</strong> <code>${result.paymentIntent.id}</code>`,
@@ -119,7 +122,7 @@ const PaymentForm = () => {
                     </CardElement>
                     <p className='text-red-500'><small>{error}</small></p>
                     <button type='submit' className='btn btn-primary w-full' disabled={!stripe}>
-                         Pay ${bookingInfo.price}
+                         {paymenting ? `Pay ${bookingInfo.price}` : 'Loading...'}
                     </button>
                </form>
           </div>

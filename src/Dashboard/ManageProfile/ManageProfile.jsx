@@ -5,12 +5,12 @@ import axios from "axios";
 import useAuthContext from "../../Hook/useAuthContext";
 import LoadingSpinner from "../../Sheared/Loading/LoadingSpinner";
 import { useQuery } from "@tanstack/react-query";
-import useAxios from "../../Hook/useAxios";
+import useAxiosSecure from "../../Hook/useAxiosSecure";
 
 const ManageProfile = () => {
      const { user } = useAuthContext();
      const navigate = useNavigate();
-     const axiosInstance = useAxios();
+     const axiosInstance = useAxiosSecure();
      const fileInputRef = useRef();
      const [modalOpen, setModalOpen] = useState(false);
      const [profilePic, setProfilePic] = useState(user?.photoURL || "");
@@ -121,13 +121,13 @@ const ManageProfile = () => {
                     >
                          Edit Profile
                     </button>
-
-                    <button
-                         onClick={() => navigate("/dashboard/joinAsTourGuide")}
-                         className="btn btn-secondary w-full sm:w-auto"
-                    >
-                         Apply For Tour Guide
-                    </button>
+                    {user.role === "admin" ?
+                         <button
+                              onClick={() => navigate("/dashboard/joinAsTourGuide")}
+                              className="btn btn-secondary w-full sm:w-auto"
+                         >
+                              Apply For Tour Guide
+                         </button> : ''}
                </div>
 
                {/* Modal */}

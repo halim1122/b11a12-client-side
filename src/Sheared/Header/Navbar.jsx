@@ -31,7 +31,7 @@ const Navbar = () => {
   );
 
   return (
-    <div className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 font-bold ${scrolled ? 'font-medium bg-white shadow-md' : 'bg-transparent'}`}>
+    <div className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 font-bold ${scrolled ? ' font-medium bg-white shadow-md' : 'bg-transparent'}`}>
       <Container>
         <div className="navbar max-w-7xl mx-auto px-4 py-3">
           <div className="navbar-start">

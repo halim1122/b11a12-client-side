@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
-import useAxios from '../../Hook/useAxios';
 import useAuthContext from '../../Hook/useAuthContext';
 import LoadingSpinner from '../../Sheared/Loading/LoadingSpinner';
+import useAxiosSecure from '../../Hook/useAxiosSecure';
 
 const formatDate = (iso) => new Date(iso).toLocaleString();
 
@@ -9,7 +9,7 @@ const formatDate = (iso) => new Date(iso).toLocaleString();
 const PaymentHistory = () => {
 
      const { user } = useAuthContext()
-     const axiosInstance = useAxios();
+     const axiosInstance = useAxiosSecure();
 
      const { data: payments = [], isPending ,refetch} = useQuery({
           queryKey: ['payments', user?.email],

@@ -1,21 +1,32 @@
 import axios from 'axios';
-import React, { useContext } from 'react';
-import { AuthContext } from '../../Layouts/AuthLayouts/Provider/AuthProvider/AuthProvider';
+import useAuthContext from './useAuthContext';
+import { useEffect } from 'react';
 
-const axiosSecure = axios.create({
-     baseURL: `http://localhost:5000`
+const axiosInstance = axios.create({
+  baseURL: `http://localhost:5000`
 });
+
 const useAxiosSecure = () => {
+  const { user } = useAuthContext();
 
-     const { user } = useContext(AuthContext);
+  useEffect(() => {
+    const requestIntercept = axiosInstance.interceptors.request.use(
+      async (config) => {
+        if (user) {
+          const token = await user.getIdToken(true); // ✅ force refresh
+          config.headers.Authorization = `Bearer ${token}`;
+        }
+        return config;
+      },
+      (error) => Promise.reject(error)
+    );
 
-     axiosSecure.interceptors.request.use(config => {
-          config.headers.Authorization = `Bearer ${user.accessToken}`
-          return config;
-     }, error => {
-          return Promise.reject(error);
-     });
-     return axiosSecure;
+    return () => {
+      axiosInstance.interceptors.request.eject(requestIntercept);
+    };
+  }, [user]);
+
+  return axiosInstance;
 };
 
 export default useAxiosSecure;

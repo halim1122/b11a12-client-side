@@ -5,7 +5,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Swal from "sweetalert2";
 import useAuthContext from "../../Hook/useAuthContext";
-import useAxios from "../../Hook/useAxios";
+import useAxiosSecure from "../../Hook/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import LoadingSpinner from "../../Sheared/Loading/LoadingSpinner";
 
@@ -15,7 +15,7 @@ const BookingForm = () => {
 
      console.log("Received Package Data:", selectedPackage);
      const { user } = useAuthContext();
-     const axiosInstance = useAxios();
+     const axiosInstance = useAxiosSecure();
      const [tourDate, setTourDate] = useState(null);
      const navigate = useNavigate();
 

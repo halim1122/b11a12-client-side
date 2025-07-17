@@ -1,14 +1,29 @@
 import { FacebookShareButton } from "react-share";
 import { FaFacebook, FaShareAlt } from "react-icons/fa";
 import { useQuery } from "@tanstack/react-query";
-import useAxios from "../../Hook/useAxios";
+import useAxiosSecure from "../../Hook/useAxiosSecure";
 import { useNavigate } from "react-router";
 import useAuthContext from "../../Hook/useAuthContext";
 import { Link } from "react-router";
 import LoadingSpinner from "../../Sheared/Loading/LoadingSpinner";
+// eslint-disable-next-line no-unused-vars
+import { motion } from "framer-motion";
+
+const fadeInUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: (i) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: i * 0.2,
+      duration: 0.6,
+      ease: "easeOut"
+    }
+  }),
+};
 
 const TouristStorySection = () => {
-  const axiosInstance = useAxios();
+  const axiosInstance = useAxiosSecure();
   const { user } = useAuthContext();
   const navigate = useNavigate();
 
@@ -30,14 +45,32 @@ const TouristStorySection = () => {
   if (isLoading) return <LoadingSpinner />;
 
   return (
-    <div className="max-w-7xl mx-auto text-center px-4 py-10">
-      <div className="mb-6">
+    <motion.div
+      className="max-w-7xl mx-auto text-center px-4 py-10"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.6 }}
+    >
+      <motion.div
+        initial={{ y: -20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.6 }}
+        className="mb-6"
+      >
         <h2 className="text-2xl sm:text-3xl font-semibold text-[#007777]">Tourist Stories</h2>
-      </div>
+      </motion.div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {stories.map((story) => (
-          <div key={story._id} className="bg-white shadow-md rounded-md overflow-hidden hover:shadow-lg transition-all duration-300">
+        {stories.map((story, index) => (
+          <motion.div
+            key={story._id}
+            className="bg-white shadow-md rounded-md overflow-hidden hover:shadow-lg transition-all duration-300"
+            variants={fadeInUp}
+            initial="hidden"
+            animate="visible"
+            custom={index}
+            whileHover={{ scale: 1.03 }}
+          >
             <img src={story.images?.[0]} alt="story" className="h-48 w-full object-cover" />
             <div className="p-4 text-start space-y-2">
               <h3 className="text-lg font-semibold">{story.title}</h3>
@@ -51,27 +84,35 @@ const TouristStorySection = () => {
                     url={`https://your-app-domain.com/story/${story._id}`}
                     quote={story.title}
                   >
-                    <button className="text-[#007777] flex items-center gap-1 hover:text-[#005555] text-sm">
+                    <Link className="text-[#007777] flex items-center gap-1 hover:text-[#005555] text-sm">
                       <FaFacebook /> Share
-                    </button>
+                    </Link>
                   </FacebookShareButton>
                 ) : (
-                  <button
+                  <Link
                     onClick={(e) => handleShareClick(e)}
                     className="text-[#007777] flex items-center gap-1 hover:text-[#005555] text-sm"
                   >
                     <FaShareAlt /> Share
-                  </button>
+                  </Link>
                 )}
               </div>
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
-      <Link to="community" className="btn mt-8 btn-outline btn-sm sm:btn-md text-[#007777] border-[#007777] hover:bg-[#007777] hover:text-white">
-        All Stories
-      </Link>
-    </div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.5 }}
+        className="mt-8"
+      >
+        <Link to="community" className="btn btn-outline btn-sm sm:btn-md text-[#007777] border-[#007777] hover:bg-[#007777] hover:text-white">
+          All Stories
+        </Link>
+      </motion.div>
+    </motion.div>
   );
 };
 
