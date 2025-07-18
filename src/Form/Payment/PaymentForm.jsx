@@ -122,7 +122,7 @@ const PaymentForm = () => {
                     </CardElement>
                     <p className='text-red-500'><small>{error}</small></p>
                     <button type='submit' className='btn btn-primary w-full' disabled={!stripe}>
-                         {paymenting ? `Pay ${bookingInfo.price}` : 'Loading...'}
+                         {paymenting ? 'Loading...' : `Pay ${bookingInfo.price}`}
                     </button>
                </form>
           </div>

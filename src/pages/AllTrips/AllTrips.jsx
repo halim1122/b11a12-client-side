@@ -84,9 +84,9 @@ const AllTrips = () => {
 
                                         <div className="md:hidden mt-2">
                                              <div className="text-red-500 font-bold text-lg">${pkg.price.toLocaleString()}</div>
-                                             <button className="btn btn-sm mt-1 bg-[#007777] text-white hover:brightness-110 w-full">
-                                                  Details
-                                             </button>
+                                             <Link to={`/PackageDetails/${pkg._id}`} className="btn w-full btn-sm bg-[#007777] text-white mt-2 hover:brightness-110">
+                                             Details
+                                        </Link>
                                         </div>
 
                                         <div className="hidden md:block">
