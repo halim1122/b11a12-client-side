@@ -3,7 +3,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRef, useState } from "react";
-import useAxiosSecure from "../../Hook/useAxiosSecure";
+import useAxios from "../../Hook/useAxios";
 
 const AddPackages = () => {
      const { register, handleSubmit, reset, control } = useForm({
@@ -19,7 +19,7 @@ const AddPackages = () => {
      const queryClient = useQueryClient();
      const [uploading, setUploading] = useState(false);
      const fileInputRef = useRef();
-     const axiosInstance = useAxiosSecure();
+     const axiose = useAxios();
 
      const uploadImages = async (files) => {
           const urls = [];
@@ -37,7 +37,7 @@ const AddPackages = () => {
 
      const { mutateAsync } = useMutation({
           mutationFn: async (newPackage) => {
-               const res = await axiosInstance.post("/packages", newPackage);
+               const res = await axiose.post("/packages", newPackage);
                return res.data;
           },
           onSuccess: () => {

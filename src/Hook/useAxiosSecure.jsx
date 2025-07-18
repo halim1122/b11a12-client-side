@@ -13,7 +13,7 @@ const useAxiosSecure = () => {
     const requestIntercept = axiosInstance.interceptors.request.use(
       async (config) => {
         if (user) {
-          const token = await user.getIdToken(true); // ✅ force refresh
+          const token = await user.getIdToken(true); 
           config.headers.Authorization = `Bearer ${token}`;
         }
         return config;

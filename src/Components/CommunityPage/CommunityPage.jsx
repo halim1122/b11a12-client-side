@@ -3,15 +3,17 @@ import { useNavigate } from 'react-router-dom';
 import { FacebookShareButton, FacebookIcon } from 'react-share';
 import useAuthContext from '../../Hook/useAuthContext';
 import LoadingSpinner from '../../Sheared/Loading/LoadingSpinner';
+import useAxios from '../../Hook/useAxios';
 
 const CommunityPage = () => {
      const { user } = useAuthContext();
      const navigate = useNavigate();
+     const axiose = useAxios();
 
      const { data: stories = [], isLoading, isError } = useQuery({
           queryKey: ['allStories'],
           queryFn: async () => {
-               const res = await fetch('/api/stories'); // fetch all stories endpoint
+               const res = await axiose.get('/stories'); 
                return res.json();
           },
      });

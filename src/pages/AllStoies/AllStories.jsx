@@ -1,85 +1,75 @@
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import Swal from "sweetalert2";
-import useAxiosSecure from "../../Hook/useAxiosSecure";
-import useAuthContext from "../../Hook/useAuthContext";
 import LoadingSpinner from "../../Sheared/Loading/LoadingSpinner";
-import { FacebookShareButton } from "react-share";
-import { IoArrowRedoOutline } from "react-icons/io5";
+import useAxios from "../../Hook/useAxios";
+import StoiesCard from "./StoiesCard.jsx/StoiesCard";
 
 const AllStories = () => {
      const [openImageModal, setOpenImageModal] = useState(false);
      const [activeStoryImages, setActiveStoryImages] = useState([]);
-     const axiosInstance = useAxiosSecure();
-     const { user } = useAuthContext();
+     const [page, setPage] = useState(1);
+     const limit = 10;
 
-     const { data: stories = [], isLoading } = useQuery({
-          queryKey: ["stories"],
+     const axiose = useAxios();
+
+     const { data = {}, isLoading } = useQuery({
+          queryKey: ["stories", page],
           queryFn: async () => {
-               const res = await axiosInstance.get("/stories");
-               return res.data;
+               const res = await axiose.get(`/stories?page=${page}&limit=${limit}`);
+               return res.data; // { stories: [...], total: 50 }
           },
+          keepPreviousData: true,
      });
+
+     const stories = data?.stories || [];
+     const total = data?.total || 0;
+     const totalPages = Math.ceil(total / limit);
 
      if (isLoading) return <LoadingSpinner />;
 
      return (
-          <div className="max-w-7xl mx-auto p-4 md:p-6">
+          <div className="max-w-7xl mx-auto mt-10 md:mt-20 p-4 md:p-6">
                <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center md:text-left">All Stories</h2>
-
                <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                    {stories.map((story) => (
-                         <div key={story._id} className="bg-base-100 shadow-md rounded-lg overflow-hidden flex flex-col">
-                              {/* Image Grid */}
-                              <div className={`grid overflow-hidden ${story?.images?.length === 1
-                                   ? "grid-cols-1 grid-rows-1"
-                                   : story?.images?.length === 2
-                                        ? "grid-cols-1 grid-rows-2"
-                                        : "grid-cols-2 grid-rows-2"
-                                   } h-[250px] w-full gap-[2px]`}>
-                                   {story.images?.slice(0, 4).map((img, index) => {
-                                        const isLast = index === 3 && story.images.length > 4;
-                                        return (
-                                             <div key={index} className="relative w-full h-full cursor-pointer" onClick={() => {
-                                                  setActiveStoryImages(story.images);
-                                                  setOpenImageModal(true);
-                                             }}>
-                                                  <img src={img} alt={`story-${index}`} className="w-full h-full object-cover" />
-                                                  {isLast && (
-                                                       <div className="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center text-white text-xs font-semibold">
-                                                            +{story.images.length - 4}
-                                                       </div>
-                                                  )}
-                                             </div>
-                                        );
-                                   })}
-                              </div>
+                    {stories.map((story) => <StoiesCard key={story._id}
+                     story={story} 
+                     setActiveStoryImages={setActiveStoryImages} 
+                     setOpenImageModal={setOpenImageModal}
+                     >
 
-                              {/* Title + Description + Share */}
-                              <div className="p-4 flex flex-col flex-grow justify-between">
-                                   <div>
-                                        <h2 className="text-lg font-semibold">{story.title}</h2>
-                                        <p className="line-clamp-3 text-sm text-gray-700">{story.description}</p>
-                                   </div>
+                     </StoiesCard>)}
+               </div>
 
-                                   <div className="flex justify-end mt-4 items-center">
-                                        <FacebookShareButton
-                                             className="flex gap-1 items-center"
-                                             url={window.location.href + `#story-${story._id}`}
-                                             quote={story.title}
-                                             onClick={(e) => {
-                                                  if (!user) {
-                                                       e.preventDefault();
-                                                       window.location.href = "/login";
-                                                  }
-                                             }}
-                                        >
-                                             <IoArrowRedoOutline />share
-                                        </FacebookShareButton>
-                                   </div>
-                              </div>
-                         </div>
-                    ))}
+               {/* Pagination */}
+               <div className="mt-8 flex gap-2 justify-center">
+                    <button
+                         className=" btn btn-sm"
+                         disabled={page === 1}
+                         onClick={() => setPage(page - 1)}
+                    >
+                         Prev
+                    </button>
+
+                    {[...Array(totalPages)].map((_, idx) => {
+                         const pageNum = idx + 1;
+                         return (
+                              <button
+                                   key={pageNum}
+                                   className={`btn btn-sm ${page === pageNum ? "btn-primary" : ""}`}
+                                   onClick={() => setPage(pageNum)}
+                              >
+                                   {pageNum}
+                              </button>
+                         );
+                    })}
+
+                    <button
+                         className="join-item btn btn-sm"
+                         disabled={page === totalPages}
+                         onClick={() => setPage(page + 1)}
+                    >
+                         Next
+                    </button>
                </div>
 
                {/* Image Modal */}

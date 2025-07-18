@@ -83,10 +83,9 @@ const ManageStories = () => {
 
           <div className="max-w-7xl mx-auto p-4 md:p-6">
                <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center md:text-left">Manage Your Stories</h2>
-
+                    {stories.length === 0 && <p className="min-h-screen text-2xl md:text-4xl text-center text-gray-500 mt-10 md:mt-24">No Any stories.</p>}
                <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
 
-                    {stories.length === 0 && <p>No stories found.</p>}
                     {stories.map((story) => (
                          <div key={story._id} className="bg-base-100 shadow-md rounded-lg overflow-hidden flex flex-col">
                               {/* Images */}

@@ -23,7 +23,7 @@ const JoinAsTourGuide = () => {
                const allData = { ...data, 
                     userName: user.displayName, 
                     userEmail: user.email, 
-                    photo: user.displayName,
+                    photo: user.photoURL,
                     role: 'user'
                 }
 

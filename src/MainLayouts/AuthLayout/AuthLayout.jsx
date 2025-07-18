@@ -9,4 +9,4 @@ const AuthLayout = () => {
      );
 };
 
-export default AuthLayout;<Outlet></Outlet>
+export default AuthLayout;

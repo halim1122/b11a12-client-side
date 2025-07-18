@@ -53,7 +53,7 @@ const ManageCandidates = () => {
 
      return (
           <div className="overflow-x-auto">
-               <table className="table w-full">
+               <table className="table min-w-4xl w-full">
                     <thead className="bg-[#007777] text-white">
                          <tr>
                               <th>#</th>
@@ -67,8 +67,8 @@ const ManageCandidates = () => {
                     </thead>
                     <tbody>
                          {candidates.map((c, index) => {
-                              const slicedText = c.reason.length > 100 ? c.reason.slice(0, 40) + "..." : c.reason;
-                              const isLong = c.reason.length > 100;
+                              const slicedText = c.reason.length > 50 ? c.reason.slice(0, 40) + "..." : c.reason;
+                              const isLong = c.reason.length > 50;
 
                               return (
                                    <tr key={c._id} className="hover:bg-[#f0fafa]">

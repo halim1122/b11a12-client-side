@@ -11,8 +11,9 @@ import {
 } from "react-icons/fa";
 import { AiFillHeart } from "react-icons/ai";
 import LoadingSpinner from "../../Sheared/Loading/LoadingSpinner";
-import useAxiosSecure from "../../Hook/useAxiosSecure";
 import { Link } from "react-router";
+import useAxios from "../../Hook/useAxios";
+import { useState } from "react";
 
 const renderStars = (rating) => {
      const totalStars = 5;
@@ -32,17 +33,23 @@ const renderStars = (rating) => {
 };
 
 const AllTrips = () => {
-     const axiosInstance = useAxiosSecure();
+     const axiosInstance = useAxios();
+     const [currentPage, setCurrentPage] = useState(1);
+     const limit = 10;
 
-     const { data: packages = [], isLoading } = useQuery({
-          queryKey: ["packages"],
+     const { data, isLoading } = useQuery({
+          queryKey: ["packages", currentPage],
           queryFn: async () => {
-               const res = await axiosInstance.get("/packages");
+               const res = await axiosInstance.get(`/packages?page=${currentPage}&limit=${limit}`);
                return res.data;
           },
      });
 
-     if (isLoading) return <LoadingSpinner />
+     if (isLoading) return <LoadingSpinner />;
+
+     const packages = data?.packages || [];
+     const total = data?.total || 0;
+     const totalPages = Math.ceil(total / limit);
 
      return (
           <div className="max-w-7xl mx-auto overflow-hidden px-4 md:px-6 mt-10 md:mt-20">
@@ -52,7 +59,6 @@ const AllTrips = () => {
                               key={pkg._id}
                               className="flex flex-col md:flex-row bg-white rounded-lg shadow-md overflow-hidden w-full md:h-[250px]"
                          >
-                              {/* image section */}
                               <div className="relative md:w-1/3 w-full h-[200px] md:h-full">
                                    <img
                                         src={pkg.images?.[0]}
@@ -68,9 +74,7 @@ const AllTrips = () => {
                                    <AiFillHeart className="absolute top-2 right-2 text-red-500 text-xl cursor-pointer" />
                               </div>
 
-                              {/* Info */}
                               <div className="flex-1 p-4 flex justify-between w-full box-border">
-                                   {/* Top Section */}
                                    <div className="flex-1 p-4 space-y-2">
                                         <div className="flex items-center gap-1 text-sm">
                                              {renderStars(pkg.rating)}
@@ -78,7 +82,6 @@ const AllTrips = () => {
                                         </div>
                                         <h2 className="text-xl font-bold uppercase">{pkg.name}</h2>
 
-                                        {/* Mobile only: Price & button */}
                                         <div className="md:hidden mt-2">
                                              <div className="text-red-500 font-bold text-lg">${pkg.price.toLocaleString()}</div>
                                              <button className="btn btn-sm mt-1 bg-[#007777] text-white hover:brightness-110 w-full">
@@ -86,7 +89,6 @@ const AllTrips = () => {
                                              </button>
                                         </div>
 
-                                        {/* Desktop only: Description & Icons */}
                                         <div className="hidden md:block">
                                              <p className="text-sm text-gray-600 text-justify line-clamp-4">
                                                   {pkg.description}...
@@ -97,25 +99,49 @@ const AllTrips = () => {
                                                   <div className="p-2 rounded shadow hover:bg-base-200"><FaSwimmingPool title="Swimming Pool" /></div>
                                                   <div className="p-2 rounded shadow hover:bg-base-200"><FaDumbbell title="Gym" /></div>
                                                   <div className="p-2 rounded shadow hover:bg-base-200"><FaUtensils title="Restaurant" /></div>
-
                                              </div>
                                         </div>
                                    </div>
 
-                                   {/* Desktop only: Price section */}
                                    <div className="md:w-[130px] hidden md:flex flex-col justify-center items-center gap-2 p-4 border-t md:border-t-0 md:border-l">
                                         <div className="text-red-500 font-bold text-xl">
                                              ${pkg.price.toLocaleString()}
                                         </div>
-                                        <div className="text-gray-500 text-xs">*From/{pkg.personType ? pkg.personType : 'par person'}</div>
+                                        <div className="text-gray-500 text-xs">*From/{pkg.personType ? pkg.personType : 'per person'}</div>
                                         <Link to={`/PackageDetails/${pkg._id}`} className="btn btn-sm bg-[#007777] text-white mt-2 hover:brightness-110">
                                              Details
                                         </Link>
                                    </div>
                               </div>
                          </div>
-
                     ))}
+               </div>
+
+               {/* Pagination Controls */}
+               <div className="flex justify-center items-center gap-2 mt-10">
+                    <button
+                         onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                         className="btn btn-sm"
+                         disabled={currentPage === 1}
+                    >
+                         Prev
+                    </button>
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                         <button
+                              key={page}
+                              onClick={() => setCurrentPage(page)}
+                              className={`btn btn-sm ${page === currentPage ? 'btn-primary' : 'btn-outline'}`}
+                         >
+                              {page}
+                         </button>
+                    ))}
+                    <button
+                         onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                         className="btn btn-sm"
+                         disabled={currentPage === totalPages}
+                    >
+                         Next
+                    </button>
                </div>
           </div>
      );

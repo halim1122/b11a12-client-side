@@ -105,7 +105,7 @@ const MyAssignedTours = () => {
                          ))}
                     </tbody>
                </table>
-               {tours.length === 0 && <p className='mt-10 ml-10 text-gray-500'>No tour assigned you tuor guide</p>}
+               {tours.length === 0 && <p className='min-h-screen text-2xl md:text-4xl text-center mt-10 md:mt-24 text-gray-500'>No tour assigned you tuor guide</p>}
           </div>
      );
 };

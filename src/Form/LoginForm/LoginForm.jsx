@@ -3,12 +3,14 @@ import photo from '../../assets/ChatGPT Image Jul 11, 2025, 02_03_06 AM.png';
 import useAuthContext from '../../Hook/useAuthContext';
 import { Link, useNavigate } from 'react-router';
 import Logo from '../../Sheared/Logo/Logo';
-import Swal from 'sweetalert2';
 import useAxiosSecure from '../../Hook/useAxiosSecure';
+import { useState } from 'react';
+import Swal from 'sweetalert2';
 
 const LoginForm = () => {
-  const { register, formState: { errors }, handleSubmit } = useForm();
+  const { register, getValues, formState: { errors }, handleSubmit } = useForm();
   const { loginUser, googleLogin, PasswordReset, setUser } = useAuthContext();
+  const [emailError, setEmailError] = useState();
   const navigate = useNavigate();
   const axiosInstance = useAxiosSecure();
 
@@ -16,6 +18,13 @@ const LoginForm = () => {
     loginUser(data.email, data.password)
       .then(res => {
         setUser(res.user);
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: `Welcome, ${res.user.displayName}`,
+          showConfirmButton: false,
+          timer: 1000,
+        });
         navigate('/');
       }).catch(error => {
         console.log(error);
@@ -33,33 +42,40 @@ const LoginForm = () => {
         last_login: new Date().toISOString(),
       };
 
-      const userRes = await axiosInstance.post('/users', userInfo);
-      console.log(userRes.data)
-      setUser(res.user);
+      await axiosInstance.post('/users', userInfo);
       navigate('/');
+      setUser(res.user);
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: `Welcome, ${res.user.displayName}`,
+        showConfirmButton: false,
+        timer: 1000,
+      });
     }).catch(error => {
       console.log(error);
     });
   };
 
-  const handleForgotPassword = async () => {
-    const { value: email } = await Swal.fire({
-      title: 'Reset Password',
-      input: 'email',
-      inputLabel: 'Enter your email address',
-      inputPlaceholder: 'example@email.com',
-      showCancelButton: true
-    });
-
-    if (email) {
-      try {
-        await PasswordReset(email);
-        Swal.fire('Success', 'Password reset email sent!', 'success');
-      } catch (error) {
-        Swal.fire('Error', error.message, 'error');
-      }
+  const handleForget = () => {
+    setEmailError("");
+    const email = getValues("email");
+    if (!email) {
+      return setEmailError("Enter email to reset password")
     }
-  };
+    // console.log(email)
+    PasswordReset(email).then(() => {
+      Swal.fire({
+        position: "top-center",
+        icon: "success",
+        title: `Send email to reset your password`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }).catch((error) => {
+      console.log(error.message);
+    })
+  }
 
   return (
     <div className="bg-white min-h-screen">
@@ -78,6 +94,7 @@ const LoginForm = () => {
                 <label className="font-semibold">Email</label><br />
                 <input {...register('email', { required: "Email is required" })} type="email" required className="input input-bordered w-full" placeholder="Email" />
                 {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
+                <p className='text-warning'>{emailError}</p>
               </div>
               <div>
                 <label className="font-semibold">Password</label><br />
@@ -97,7 +114,7 @@ const LoginForm = () => {
                 )}
               </div>
               <div>
-                <button type="button" onClick={handleForgotPassword} className="link link-hover text-gray-400">Forgot password?</button>
+                <button type="button" onClick={handleForget} className="link link-hover my-3 underline text-gray-400">Forgot password?</button>
               </div>
               <button type="submit" className="btn bg-[#acd81d] w-full text-white">Login</button>
             </form>

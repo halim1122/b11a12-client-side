@@ -73,7 +73,7 @@ const MyBooking = () => {
 
      return (
           <div className="w-full overflow-x-auto">
-               {bookings.length === 0 && <p className='text-gray-500'>No Booking Any Package</p>}
+               {bookings.length === 0 && <p className='text-gray-500 min-h-screen text-2xl md:text-4xl text-center mt-10 md:mt-24'>No Booking Any Package</p>}
                <table className="table table-zebra w-full min-w-[700px]">
                     <thead>
                          <tr className='bg-gray-800 text-white'>

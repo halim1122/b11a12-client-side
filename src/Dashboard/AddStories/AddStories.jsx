@@ -7,11 +7,13 @@ import useAxiosSecure from "../../Hook/useAxiosSecure";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import LoadingSpinner from "../../Sheared/Loading/LoadingSpinner";
+import useAxios from "../../Hook/useAxios";
 
 const AddStories = () => {
      const { user } = useAuthContext();
      const navigate = useNavigate();
      const axiosInstance = useAxiosSecure();
+     const axiose = useAxios();
      const [loading, setLoading] = useState(false);
      const {
           register,
@@ -66,11 +68,12 @@ const AddStories = () => {
                          photo: user.photoURL || "",
                          role: guide.role
                     },
+                    likedBy:[],
                     created_at: new Date().toISOString(),
                };
 
-               const response = await axiosInstance.post("/stories", storyData);
-               console.log(storyData)
+               const response = await axiose.post("/stories", storyData);
+               // console.log(storyData)
                if (response.data.insertedId) {
                     Swal.fire("Success", "Story added successfully!", "success");
                     reset(); // form reset

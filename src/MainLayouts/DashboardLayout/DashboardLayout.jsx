@@ -13,8 +13,27 @@ import { IoIosAddCircle } from "react-icons/io";
 import { TbBrandStorybook, TbUserSearch } from "react-icons/tb";
 import { MdPayment } from "react-icons/md";
 import Footer from "../../Sheared/Footer/Footer";
+import useAuthContext from "../../Hook/useAuthContext";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../../Hook/useAxiosSecure";
+import LoadingSpinner from "../../Sheared/Loading/LoadingSpinner";
 
 const DashboardLayout = () => {
+
+  const { user } = useAuthContext();
+  const axiosInstance = useAxiosSecure();
+
+  const { data: dbUser = {}, isLoading, refetch } = useQuery({
+    queryKey: ["userRole", user?.email],
+    queryFn: async () => {
+      const res = await axiosInstance.get(`/users/${user.email}`);
+      return res.data;
+    },
+    enabled: !!user?.email
+  });
+
+  if (isLoading) return <LoadingSpinner />
+  refetch();
   return (
     <div className="drawer lg:drawer-open">
       <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
@@ -80,7 +99,7 @@ const DashboardLayout = () => {
                 <FaHome /> Home
               </NavLink>
             </li>
-            <li>
+            {(dbUser.role === "user" || dbUser.role === "tour-guide") && (<li> {/*  manege profile */}
               <NavLink
                 to="/dashboard/manageProfile"
                 className={({ isActive }) =>
@@ -90,8 +109,8 @@ const DashboardLayout = () => {
               >
                 <FaUser /> Manage Profile
               </NavLink>
-            </li>
-            <li>
+            </li>)}
+            {dbUser.role === 'user' && <><li>{/*  My Bookings */}
               <NavLink
                 to="/dashboard/myBookings"
                 className={({ isActive }) =>
@@ -102,7 +121,7 @@ const DashboardLayout = () => {
                 <FaRegListAlt /> My Bookings
               </NavLink>
             </li>
-            <li>
+            <li> {/* Payment History */}
               <NavLink
                 to="/dashboard/paymentHistory"
                 className={({ isActive }) =>
@@ -113,7 +132,18 @@ const DashboardLayout = () => {
                 <MdPayment /> Payment History
               </NavLink>
             </li>
-            <li>
+            <li>{/* Join As Tour Guide*/}
+              <NavLink
+                to="/dashboard/joinAsTourGuide"
+                className={({ isActive }) =>
+                  `flex items-center gap-2 px-3 py-2 rounded-md hover:bg-base-300 ${isActive ? "bg-[#007777] text-white" : ""
+                  }`
+                }
+              >
+                <FaUserTie /> Join As Tour Guide
+              </NavLink>
+            </li></>}
+            {(dbUser.role === "tour-guide" && dbUser.role !== 'admin') && (<li> {/* My Assigned Tour*/}
               <NavLink
                 to="/dashboard/myAssignedTour"
                 className={({ isActive }) =>
@@ -123,19 +153,19 @@ const DashboardLayout = () => {
               >
                 <FaBook /> My Assigned Tour
               </NavLink>
-            </li>
-            <li>
+            </li>)}
+            {dbUser.role === "admin" && <><li>{/*Manage Profile A*/}
               <NavLink
-                to="/dashboard/manageStories"
+                to="/dashboard/manageProfileAdmin"
                 className={({ isActive }) =>
                   `flex items-center gap-2 px-3 py-2 rounded-md hover:bg-base-300 ${isActive ? "bg-[#007777] text-white" : ""
                   }`
                 }
               >
-                <TbBrandStorybook /> Manage Stories
+                <FaUsersCog /> Manage Profile
               </NavLink>
             </li>
-            <li>
+            <li>{/* Add Package A*/}
               <NavLink
                 to="/dashboard/addPackage"
                 className={({ isActive }) =>
@@ -146,29 +176,7 @@ const DashboardLayout = () => {
                 <IoIosAddCircle /> Add Package
               </NavLink>
             </li>
-            <li>
-              <NavLink
-                to="/dashboard/addStories"
-                className={({ isActive }) =>
-                  `flex items-center gap-2 px-3 py-2 rounded-md hover:bg-base-300 ${isActive ? "bg-[#007777] text-white" : ""
-                  }`
-                }
-              >
-                <FaPlusCircle /> Add Stories
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/dashboard/joinAsTourGuide"
-                className={({ isActive }) =>
-                  `flex items-center gap-2 px-3 py-2 rounded-md hover:bg-base-300 ${isActive ? "bg-[#007777] text-white" : ""
-                  }`
-                }
-              >
-                <FaUserTie /> Join As Tour Guide
-              </NavLink>
-            </li>
-            <li>
+            <li>{/*  Manage Users A*/}
               <NavLink
                 to="/dashboard/manageUsers"
                 className={({ isActive }) =>
@@ -179,18 +187,7 @@ const DashboardLayout = () => {
                 <FaUsersCog /> Manage Users
               </NavLink>
             </li>
-            <li>
-              <NavLink
-                to="/dashboard/manageProfileAdmin"
-                className={({ isActive }) =>
-                  `flex items-center gap-2 px-3 py-2 rounded-md hover:bg-base-300 ${isActive ? "bg-[#007777] text-white" : ""
-                  }`
-                }
-              >
-                <FaUsersCog /> Manage Profile Admin
-              </NavLink>
-            </li>
-            <li>
+            <li>{/*  Manage Candidates A*/}
               <NavLink
                 to="/dashboard/manageCandidates"
                 className={({ isActive }) =>
@@ -199,6 +196,28 @@ const DashboardLayout = () => {
                 }
               >
                 <TbUserSearch /> Manage Candidates
+              </NavLink>
+            </li></>}
+            <li>{/*  Manage Stories*/}
+              <NavLink
+                to="/dashboard/manageStories"
+                className={({ isActive }) =>
+                  `flex items-center gap-2 px-3 py-2 rounded-md hover:bg-base-300 ${isActive ? "bg-[#007777] text-white" : ""
+                  }`
+                }
+              >
+                <TbBrandStorybook /> Manage Stories
+              </NavLink>
+            </li>
+            <li>{/*  Add Stories*/}
+              <NavLink
+                to="/dashboard/addStories"
+                className={({ isActive }) =>
+                  `flex items-center gap-2 px-3 py-2 rounded-md hover:bg-base-300 ${isActive ? "bg-[#007777] text-white" : ""
+                  }`
+                }
+              >
+                <FaPlusCircle /> Add Stories
               </NavLink>
             </li>
           </ul>

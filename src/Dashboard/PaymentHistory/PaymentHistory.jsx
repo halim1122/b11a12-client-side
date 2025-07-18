@@ -24,7 +24,7 @@ const PaymentHistory = () => {
      }
      refetch();
      return (
-          <div className="p-4">
+          <div className="p-4 min-h-screen">
                <h2 className="text-xl font-bold mb-4">My Payment History</h2>
                <div className="overflow-x-auto">
                     <table className="table table-zebra w-full min-w-[700px]">
@@ -40,7 +40,7 @@ const PaymentHistory = () => {
                          <tbody>
                               {payments.length === 0 ? (
                                    <tr>
-                                        <td colSpan={6} className="text-center py-4 text-gray-500">
+                                        <td colSpan={6} className=" text-2xl md:text-4xl text-center mt-10 md:mt-24 text-gray-500">
                                              No Payment History Found
                                         </td>
                                    </tr>

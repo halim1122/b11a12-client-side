@@ -8,6 +8,7 @@ import photo from '../../assets/ChatGPT Image Jul 11, 2025, 02_03_06 AM.png'
 import { AuthContext } from '../../Provider/AuthProvider';
 import SocielGoogle from '../../Sheared/Sociel/SocielGoogle';
 import useAxiosSecure from '../../Hook/useAxiosSecure';
+import Swal from 'sweetalert2';
 const RegisterForm = () => {
      const { register, formState: { errors }, handleSubmit } = useForm();
      const { createUser, setUser, updateUserProfile } = useContext(AuthContext);
@@ -46,6 +47,13 @@ const RegisterForm = () => {
                               setUser(res.user);
                               console.log(res.user)
                               setRegistering(false)
+                               Swal.fire({
+                                                  position: "top-end",
+                                                  icon: "success",
+                                                  title: `Welcome, ${res.user.displayName}`,
+                                                  showConfirmButton: false,
+                                                  timer: 1000,
+                                             });
                               navigate('/')
                          }).catch(error => {
                               console.log(error)

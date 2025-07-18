@@ -1,13 +1,13 @@
 import { FacebookShareButton } from "react-share";
 import { FaFacebook, FaShareAlt } from "react-icons/fa";
 import { useQuery } from "@tanstack/react-query";
-import useAxiosSecure from "../../Hook/useAxiosSecure";
 import { useNavigate } from "react-router";
 import useAuthContext from "../../Hook/useAuthContext";
 import { Link } from "react-router";
 import LoadingSpinner from "../../Sheared/Loading/LoadingSpinner";
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
+import useAxios from "../../Hook/useAxios";
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 30 },
@@ -23,14 +23,14 @@ const fadeInUp = {
 };
 
 const TouristStorySection = () => {
-  const axiosInstance = useAxiosSecure();
+  const axiose = useAxios();
   const { user } = useAuthContext();
   const navigate = useNavigate();
 
   const { data: stories = [], isLoading } = useQuery({
     queryKey: ["randomStories"],
     queryFn: async () => {
-      const res = await axiosInstance.get("/stories/random");
+      const res = await axiose.get("/stories/random");
       return res.data;
     },
   });

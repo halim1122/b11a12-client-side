@@ -1,16 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router";
-import useAxiosSecure from "../../Hook/useAxiosSecure";
 import LoadingSpinner from "../../Sheared/Loading/LoadingSpinner";
+import useAxios from "../../Hook/useAxios";
 
 const OurPackages = () => {
-  const axiosInstance = useAxiosSecure();
+  const axiose = useAxios();
   const navigate = useNavigate();
 
   const { data: packages = [], isLoading } = useQuery({
     queryKey: ["random-packages"],
     queryFn: async () => {
-      const res = await axiosInstance.get("/random-packages");
+      const res = await axiose.get("/random-packages");
       return res.data;
     },
   });
