@@ -26,8 +26,8 @@ const LoginForm = () => {
           timer: 1000,
         });
         navigate('/');
-      }).catch(error => {
-        console.log(error);
+      }).catch(() => {
+        // console.log(error);
       });
   };
 
@@ -52,8 +52,8 @@ const LoginForm = () => {
         showConfirmButton: false,
         timer: 1000,
       });
-    }).catch(error => {
-      console.log(error);
+    }).catch(() => {
+      // console.log(error);
     });
   };
 
@@ -72,8 +72,8 @@ const LoginForm = () => {
         showConfirmButton: false,
         timer: 1500,
       });
-    }).catch((error) => {
-      console.log(error.message);
+    }).catch(() => {
+      // console.log(error.message);
     })
   }
 

@@ -20,7 +20,7 @@ const RegisterForm = () => {
 
      const onSubmit = (data) => {
           setRegistering(true)
-          console.log(data);
+          // console.log(data);
           createUser(data.email, data.password)
                .then(async (res) => {
 
@@ -33,8 +33,8 @@ const RegisterForm = () => {
                          last_login: new Date().toISOString(),
                     }
 
-                    const userRes = await axiosInstance.post('/users', userInfo);
-                    console.log(userRes.data)
+                    await axiosInstance.post('/users', userInfo);
+                    // console.log(userRes.data)
 
                     // console.log(res);
                     const profileInfo = {
@@ -43,9 +43,9 @@ const RegisterForm = () => {
                     }
                     updateUserProfile(profileInfo)
                          .then(() => {
-                              console.log('profile updated')
+                              ('profile updated')
                               setUser(res.user);
-                              console.log(res.user)
+                              // console.log(res.user)
                               setRegistering(false)
                                Swal.fire({
                                                   position: "top-end",
@@ -55,12 +55,12 @@ const RegisterForm = () => {
                                                   timer: 1000,
                                              });
                               navigate('/')
-                         }).catch(error => {
-                              console.log(error)
+                         }).catch(() => {
+                              // console.log(error)
                          })
 
-               }).catch(error => {
-                    console.log(error)
+               }).catch(()=> {
+                    // console.log(error)
                })
 
      }
@@ -83,7 +83,7 @@ const RegisterForm = () => {
                     formData
                );
                setProfilePic(res?.data?.data?.url);
-               console.log(res.data)
+               // console.log(res.data)
           } catch (error) {
                console.error("Image upload failed:", error);
           }

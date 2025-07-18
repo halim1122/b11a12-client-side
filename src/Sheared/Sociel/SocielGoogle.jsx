@@ -19,12 +19,12 @@ const SocielGoogle = () => {
         last_login: new Date().toISOString(),
       }
 
-      const userRes = await axiosInstance.post('/users', userInfo);
-      console.log(userRes.data)
+      await axiosInstance.post('/users', userInfo);
+      // console.log(userRes.data)
       setUser(res.user)
       navigate('/');
-    }).catch(error => {
-      console.log(error)
+    }).catch(() => {
+      // console.log(error)
     })
   }
   return (

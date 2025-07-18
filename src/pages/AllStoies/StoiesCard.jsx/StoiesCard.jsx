@@ -3,6 +3,7 @@ import { FacebookShareButton } from "react-share";
 import { IoArrowRedoOutline } from "react-icons/io5";
 import { useState } from 'react';
 import useAxios from '../../../Hook/useAxios';
+import { AiFillLike, AiOutlineLike } from 'react-icons/ai';
 
 const StoiesCard = ({ story, setActiveStoryImages, setOpenImageModal }) => {
      const { user } = useAuthContext();
@@ -17,12 +18,12 @@ const hendleLiked = () => {
      if(user?.email === author?.email) return;
      axiose.patch(`/like/${_id}`,{email: user?.email})
      .then((data) => {
-          console.log(data?.data);
+          // console.log(data?.data);
           const isLiked = data?.data?.liked;
           setLiked(isLiked);
-          setLikeCount(prev => isLiked ? prev + 1 : prev - 2)
-     }).catch(error => {
-          console.log(error.message)
+          setLikeCount(prev => isLiked ? prev + 1 : prev - 1)
+     }).catch(()=> {
+          // console.log(error.message)
      })
 }
      return (
@@ -61,7 +62,7 @@ const hendleLiked = () => {
                          </div>
 
                          <div className="flex justify-between mt-4 items-center">
-                              <button onClick={hendleLiked}>{liked ? "liked" : "like"} {likeCount}</button>
+                              <button className='flex items-center gap-1' onClick={hendleLiked}>{liked ? <AiFillLike color='#0661FF' /> : <AiOutlineLike />} {likeCount}</button>
                               <FacebookShareButton
                                    className="flex gap-1 items-center"
                                    url={window.location.href + `#story-${_id}`}

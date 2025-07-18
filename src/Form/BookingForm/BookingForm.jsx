@@ -13,7 +13,7 @@ const BookingForm = () => {
      const location = useLocation();
      const selectedPackage = location.state?.packageData;
 
-     console.log("Received Package Data:", selectedPackage);
+     // console.log("Received Package Data:", selectedPackage);
      const { user } = useAuthContext();
      const axiosInstance = useAxiosSecure();
      const [tourDate, setTourDate] = useState(null);

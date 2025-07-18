@@ -66,7 +66,7 @@ const ManageProfile = () => {
                );
                const imageUrl = res?.data?.data?.url;
                setProfilePic(imageUrl);
-               console.log("Image uploaded:", imageUrl);
+               // console.log("Image uploaded:", imageUrl);
           } catch (error) {
                console.error("Image upload failed:", error);
           }

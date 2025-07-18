@@ -27,7 +27,7 @@ const JoinAsTourGuide = () => {
                     role: 'user'
                 }
 
-               console.log("Submitted Data:", allData);
+               // console.log("Submitted Data:", allData);
 
                // TODO: Backend এ পাঠাতে পারেন এখানে
 

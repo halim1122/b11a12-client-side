@@ -22,7 +22,7 @@ const MyBooking = () => {
           enabled: !!user?.email
      });
 
-     console.log(bookings)
+     // console.log(bookings)
 
      if (isPending) return <LoadingSpinner />;
 

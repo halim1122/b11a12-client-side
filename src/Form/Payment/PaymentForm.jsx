@@ -52,7 +52,7 @@ const PaymentForm = () => {
                return;
           }
 
-          const { error, paymentMethod } = await stripe.createPaymentMethod({
+          const { error } = await stripe.createPaymentMethod({
                type: 'card',
                card,
           })
@@ -62,7 +62,7 @@ const PaymentForm = () => {
                setError(error.message);
           } else {
                setError('');
-               console.log("payment method", paymentMethod)
+               // console.log("payment method", paymentMethod)
           }
 
           const res = await axiosInstance.post('/create-payment-intent', {
@@ -87,8 +87,8 @@ const PaymentForm = () => {
           } else {
                setError('');
                if (result.paymentIntent.status === 'succeeded') {
-                    console.log('Payment succeeded!');
-                    console.log(result);
+                    // console.log('Payment succeeded!');
+                    // console.log(result);
                     //step-4 
                     const paymentDoc = {
                          email: user.email,
