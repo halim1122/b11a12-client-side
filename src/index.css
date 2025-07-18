@@ -4,6 +4,6 @@
 @plugin "daisyui";
 
 .dancing{
-  font-family: "Dancing Script", cursive;
+  font-family: "Dancing Script";
   font-optical-sizing: auto;
 }

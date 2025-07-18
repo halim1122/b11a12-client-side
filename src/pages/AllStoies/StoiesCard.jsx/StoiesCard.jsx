@@ -4,10 +4,12 @@ import { IoArrowRedoOutline } from "react-icons/io5";
 import { useState } from 'react';
 import useAxios from '../../../Hook/useAxios';
 import { AiFillLike, AiOutlineLike } from 'react-icons/ai';
+import { useNavigate } from 'react-router';
 
 const StoiesCard = ({ story, setActiveStoryImages, setOpenImageModal }) => {
      const { user } = useAuthContext();
      const axiose = useAxios();
+     const navigate = useNavigate();
 
      const { likedBy, images, title, description,author, _id } = story;
      const [liked, setLiked] = useState(likedBy?.includes(user?.email));
@@ -15,6 +17,7 @@ const StoiesCard = ({ story, setActiveStoryImages, setOpenImageModal }) => {
      // console.log(liked)
 
 const hendleLiked = () => {
+     if(!user) return navigate("/login")
      if(user?.email === author?.email) return;
      axiose.patch(`/like/${_id}`,{email: user?.email})
      .then((data) => {
