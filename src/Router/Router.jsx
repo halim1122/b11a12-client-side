@@ -24,6 +24,10 @@ import Payment from "../Form/Payment/Payment";
 import PaymentHistory from "../Dashboard/PaymentHistory/PaymentHistory";
 import MyAssignedTours from "../Dashboard/MyAssignedTours/MyAssignedTours";
 import ManageProfileAdmin from "../Dashboard/ManageProfileAdmin/ManageProfileAdmin";
+import PrivateAdmin from "../Provider/PrivateAdmin";
+import ForbiddenPage from "../pages/Forbiden/ForbiddenPage";
+import PrivateTourGuide from "../Provider/PrivateTourGuide";
+import PrivateUser from "../Provider/PrivateUser";
 
 export const router = createBrowserRouter([
      {
@@ -36,6 +40,10 @@ export const router = createBrowserRouter([
                }, {
                     path: 'community',
                     Component: AllStories
+               },
+               {
+                    path: 'forbidden',
+                    Component: ForbiddenPage
                },
                {
                     path: 'allTrips',
@@ -82,13 +90,16 @@ export const router = createBrowserRouter([
                {
                     index: true,
                     Component: HomeLayout,
-               }, {
+               },{
                     path: 'manageProfile',
-                    Component: ManageProfile,
+                    element:<PrivateUser><ManageProfile></ManageProfile></PrivateUser>
+               },{
+                    path: 'managesProfile',
+                    element:<PrivateTourGuide><ManageProfile></ManageProfile></PrivateTourGuide>
                },
                {
                     path: 'myBookings',
-                    Component: MyBooking
+                    element:<PrivateUser><MyBooking></MyBooking></PrivateUser>
                },
                {
                     path: 'payment/:bookingId',
@@ -96,7 +107,7 @@ export const router = createBrowserRouter([
                },
                {
                     path: 'paymentHistory',
-                    Component: PaymentHistory
+                    element:<PrivateUser><PaymentHistory></PaymentHistory></PrivateUser>
                },
                {
                     path: 'manageStories',
@@ -108,31 +119,31 @@ export const router = createBrowserRouter([
                },
                {
                     path: 'addPackage',
-                    Component: AddPackages
+                    element: <PrivateAdmin><AddPackages></AddPackages></PrivateAdmin>
                },
                {
                     path: 'joinAsTourGuide',
-                    Component: JoinAsTourGuide
+                    element:<PrivateUser><JoinAsTourGuide></JoinAsTourGuide></PrivateUser>
                },
                {
                     path: 'manageUsers',
-                    Component: ManageUsers
+                    element:<PrivateAdmin><ManageUsers></ManageUsers></PrivateAdmin>
                },
                {
                     path: 'manageCandidates',
-                    Component: ManageCandidates
+                    element: <PrivateAdmin><ManageCandidates></ManageCandidates></PrivateAdmin>
                },
                {
                     path: 'bookingForm',
-                    Component: BookingForm
+                    element:<PrivateUser><BookingForm></BookingForm></PrivateUser>
                },
                {
-                    path:'myAssignedTour',
-                    Component: MyAssignedTours
+                    path: 'myAssignedTour',
+                    element: <PrivateTourGuide><MyAssignedTours></MyAssignedTours></PrivateTourGuide>
                },
                {
-                    path:'manageProfileAdmin',
-                    Component: ManageProfileAdmin
+                    path: 'manageProfileAdmin',
+                    element: <PrivateAdmin><ManageProfileAdmin></ManageProfileAdmin></PrivateAdmin>
                }
           ]
      }

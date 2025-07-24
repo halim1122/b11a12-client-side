@@ -99,7 +99,8 @@ const DashboardLayout = () => {
                 <FaHome /> Home
               </NavLink>
             </li>
-            {(dbUser.role === "user" || dbUser.role === "tour-guide") && (<li> {/*  manege profile */}
+            {dbUser.role === 'user' && <>
+            <li> {/*  manege profile */}
               <NavLink
                 to="/dashboard/manageProfile"
                 className={({ isActive }) =>
@@ -109,8 +110,8 @@ const DashboardLayout = () => {
               >
                 <FaUser /> Manage Profile
               </NavLink>
-            </li>)}
-            {dbUser.role === 'user' && <><li>{/*  My Bookings */}
+            </li>
+            <li>{/*  My Bookings */}
               <NavLink
                 to="/dashboard/myBookings"
                 className={({ isActive }) =>
@@ -143,7 +144,19 @@ const DashboardLayout = () => {
                 <FaUserTie /> Join As Tour Guide
               </NavLink>
             </li></>}
-            {(dbUser.role === "tour-guide" && dbUser.role !== 'admin') && (<li> {/* My Assigned Tour*/}
+            {(dbUser.role === "tour-guide") && (<>
+              <li> {/*  manege profile */}
+              <NavLink
+                to="/dashboard/managesProfile"
+                className={({ isActive }) =>
+                  `flex items-center gap-2 px-3 py-2 rounded-md hover:bg-base-300 ${isActive ? "bg-[#007777] text-white" : ""
+                  }`
+                }
+              >
+                <FaUser /> Manage Profile
+              </NavLink>
+            </li>
+              <li> {/* My Assigned Tour*/}
               <NavLink
                 to="/dashboard/myAssignedTour"
                 className={({ isActive }) =>
@@ -153,7 +166,7 @@ const DashboardLayout = () => {
               >
                 <FaBook /> My Assigned Tour
               </NavLink>
-            </li>)}
+            </li></>)}
             {dbUser.role === "admin" && <><li>{/*Manage Profile A*/}
               <NavLink
                 to="/dashboard/manageProfileAdmin"

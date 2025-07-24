@@ -4,7 +4,7 @@ import ManageProfile from '../ManageProfile/ManageProfile';
 import useAuthContext from '../../Hook/useAuthContext';
 
 const axiosInstance = axios.create({
-     baseURL: 'http://localhost:5000',
+     baseURL:'https://tourist-for-server-site.vercel.app',
 });
 
 

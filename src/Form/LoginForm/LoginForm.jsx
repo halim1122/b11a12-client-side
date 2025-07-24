@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import photo from '../../assets/ChatGPT Image Jul 11, 2025, 02_03_06 AM.png';
 import useAuthContext from '../../Hook/useAuthContext';
-import { Link, useNavigate } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 import Logo from '../../Sheared/Logo/Logo';
 import useAxiosSecure from '../../Hook/useAxiosSecure';
 import { useState } from 'react';
@@ -12,8 +12,9 @@ const LoginForm = () => {
   const { loginUser, googleLogin, PasswordReset, setUser } = useAuthContext();
   const [emailError, setEmailError] = useState();
   const navigate = useNavigate();
+  const location = useLocation();
   const axiosInstance = useAxiosSecure();
-
+  const from = location.state?.from?.pathname || "/";
   const onSubmit = (data) => {
     loginUser(data.email, data.password)
       .then(res => {
@@ -25,7 +26,7 @@ const LoginForm = () => {
           showConfirmButton: false,
           timer: 1000,
         });
-        navigate('/');
+        navigate(from, { replace: true });
       }).catch(() => {
         // console.log(error);
       });
@@ -36,14 +37,13 @@ const LoginForm = () => {
       const userInfo = {
         email: res.user.email,
         displayName: res?.user?.displayName,
-        role: 'user',
         photoURL: res?.user?.photoURL,
         created_at: new Date().toISOString(),
         last_login: new Date().toISOString(),
       };
 
       await axiosInstance.post('/users', userInfo);
-      navigate('/');
+      navigate(from, { replace: true });
       setUser(res.user);
       Swal.fire({
         position: "top-end",

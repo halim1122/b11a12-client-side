@@ -1,5 +1,5 @@
 import React, { useContext, useRef, useState } from 'react';
-import { Link, useNavigate } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import Logo from '../../Sheared/Logo/Logo';
@@ -15,8 +15,10 @@ const RegisterForm = () => {
      const [registering, setRegistering] = useState(false)
      const [profilePic, setProfilePic] = useState('')
      const navigate = useNavigate();
+     const location = useLocation();
      const fileInputRef = useRef();
      const axiosInstance = useAxiosSecure();
+     const from = location.state?.from?.pathname || "/";
 
      const onSubmit = (data) => {
           setRegistering(true)
@@ -54,7 +56,7 @@ const RegisterForm = () => {
                                                   showConfirmButton: false,
                                                   timer: 1000,
                                              });
-                              navigate('/')
+                              navigate(from, { replace: true });
                          }).catch(() => {
                               // console.log(error)
                          })

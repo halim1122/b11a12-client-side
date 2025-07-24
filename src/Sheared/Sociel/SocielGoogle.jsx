@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import useAuthContext from "../../Hook/useAuthContext";
 import useAxiosSecure from "../../Hook/useAxiosSecure";
 
@@ -7,6 +7,8 @@ const SocielGoogle = () => {
   const { setUser, googleLogin } = useAuthContext();
   const axiosInstance = useAxiosSecure();
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
 
   const handleGoogleRegister = () => {
     googleLogin().then(async (res) => {
@@ -22,7 +24,7 @@ const SocielGoogle = () => {
       await axiosInstance.post('/users', userInfo);
       // console.log(userRes.data)
       setUser(res.user)
-      navigate('/');
+      navigate(from, { replace: true });
     }).catch(() => {
       // console.log(error)
     })
