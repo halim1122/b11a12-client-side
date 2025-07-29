@@ -4,8 +4,6 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../Hook/useAxiosSecure";
 import LoadingSpinner from "../../Sheared/Loading/LoadingSpinner";
 import useAuthContext from "../../Hook/useAuthContext";
-import { IoArrowRedoOutline } from "react-icons/io5";
-import { FacebookShareButton } from "react-share";
 import StoiesCard from "../AllStoies/StoiesCard.jsx/StoiesCard";
 
 const TourGuideProfilePage = () => {
