@@ -49,7 +49,7 @@ const WhyTravelWithUs = () => {
   return (
     <section className="bg-base-200 py-10 px-4">
       <div className="max-w-6xl mx-auto text-center">
-        <h2 className="text-3xl font-bold mb-8">✨ Why Travel With Us?</h2>
+        <h2 className="text-3xl font-bold mb-8 text-[#007777]">✨ Why Travel With Us?</h2>
         <div className="grid md:grid-cols-3 lg:grid-cols-4 grid-cols-1 sm:grid-cols-2 gap-6 text-left">
           {features.map((item, idx) => (
             <div key={idx} className="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">

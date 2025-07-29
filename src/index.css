@@ -7,3 +7,8 @@
   font-family: "Dancing Script";
   font-optical-sizing: auto;
 }
+
+a.active{
+  background: #007777;
+  color: white;
+}

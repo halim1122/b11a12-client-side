@@ -24,7 +24,7 @@ const TravelGuideSection = () => {
 
      return (
     <section className="py-16 px-4 md:px-20">
-      <h2 className="text-4xl font-bold text-center mb-10 text-gray-800">Tourism & Travel Guide</h2>
+      <h2 className="text-4xl font-bold text-center mb-10 text-[#007777]">Tourism & Travel Guide</h2>
 
       <Tabs>
         <TabList className="flex justify-center gap-6 mb-8">
@@ -40,7 +40,7 @@ const TravelGuideSection = () => {
         {/* Guides */}
         <TabPanel>
            <div className="mt-10">
-               <h2 className="text-xl font-semibold text-center mb-4 border-b pb-2">Choose Your Tour Guides</h2>
+               <h2 className="text-xl font-semibold text-center mb-4 border-b pb-2 text-[#007777]">Choose Your Tour Guides</h2>
                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                     {guides.slice(0, 6).map((guide) => (
                          <div

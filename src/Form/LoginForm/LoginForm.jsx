@@ -32,30 +32,51 @@ const LoginForm = () => {
       });
   };
 
-  const handleGoogleLogin = () => {
-    googleLogin().then(async (res) => {
+  const handleGoogleLogin = async () => {
+    try {
+      const res = await googleLogin();
+      const user = res?.user;
+
+      if (!user?.email) {
+        throw new Error("User email not found from Google response.");
+      }
+
       const userInfo = {
-        email: res.user.email,
-        displayName: res?.user?.displayName,
-        photoURL: res?.user?.photoURL,
+        email: user.email,
+        displayName: user.displayName || "Unknown",
+        photoURL: user.photoURL || "",
         created_at: new Date().toISOString(),
         last_login: new Date().toISOString(),
       };
 
+      // User info save to DB
       await axiosInstance.post('/users', userInfo);
+
+      // Save in context/state
+      setUser(user);
+
+      // Navigate to previous location
       navigate(from, { replace: true });
-      setUser(res.user);
+
+      // Show success message
       Swal.fire({
         position: "top-end",
         icon: "success",
-        title: `Welcome, ${res.user.displayName}`,
+        title: `Welcome, ${user.displayName || "User"}`,
         showConfirmButton: false,
         timer: 1000,
       });
-    }).catch(() => {
-      // console.log(error);
-    });
+    } catch (error) {
+      console.error("Google login failed:", error.message);
+
+      Swal.fire({
+        icon: "error",
+        title: "Login failed",
+        text: error.message || "Something went wrong!",
+      });
+    }
   };
+
 
   const handleForget = () => {
     setEmailError("");

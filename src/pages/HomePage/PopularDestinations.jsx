@@ -46,7 +46,7 @@ const destinations = [
 const PopularDestinations = () => {
      return (
           <section className="max-w-7xl mx-auto px-4 py-10">
-               <h2 className="text-3xl font-bold text-center mb-8">🌍 Popular Destinations</h2>
+               <h2 className="text-3xl font-bold text-center mb-8 text-[#007777]">🌍 Popular Destinations</h2>
                <div className="grid md:grid-cols-3 lg:grid-cols-4 grid-cols-1 sm:grid-cols-2 gap-6">
                     {destinations.map((dest, idx) => (
                          <div key={idx} className="rounded-lg overflow-hidden shadow-md hover:shadow-xl transition duration-300 group relative">
