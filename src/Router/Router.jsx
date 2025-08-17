@@ -55,9 +55,7 @@ export const router = createBrowserRouter([
                },
                {
                     path: 'PackageDetails/:id',
-                    element: <PrivateProvider>
-                         <PackageDetailsPage></PackageDetailsPage>
-                    </PrivateProvider>
+                    element:<PackageDetailsPage></PackageDetailsPage>
                },
                {
                     path: 'tourGuideProfile/:email',

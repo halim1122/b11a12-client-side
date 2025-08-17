@@ -5,7 +5,7 @@ import useAuthContext from '../../Hook/useAuthContext';
 import TopRatedPackagesChart from '../../pages/TopRatedPackagesChart/TopRatedPackagesChart';
 
 const axiosInstance = axios.create({
-     baseURL: 'http://localhost:5000',
+     baseURL: 'https://tourist-for-server-site.vercel.app',
 });
 
 
