@@ -2,7 +2,7 @@ import React from 'react';
 
 const OverviewSection = () => {
      return (
-          <section className="bg-gray-100 py-12 px-4 md:px-10">
+          <section className="bg-gray-100 pb-12 pt-24 px-4 md:px-10">
                <div className="max-w-7xl mx-auto text-center">
                     <h2 className="text-3xl md:text-4xl font-bold mb-4 text-[#007777]">Explore the World with Us</h2>
                     <p className="text-gray-600 mb-8 max-w-3xl mx-auto">

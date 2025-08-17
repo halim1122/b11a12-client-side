@@ -29,7 +29,7 @@ const ChooseYourTourGuides = () => {
                          <div
                               key={guide._id}
                               onClick={() => navigate(`/tourGuideProfile/${guide.email}`)}
-                              className="cursor-pointer border rounded-lg p-4 hover:shadow-md transition duration-200"
+                              className="cursor-pointer border-gray-400 border rounded-lg p-4 hover:shadow-xl transition duration-200"
                          >
                               <img
                                    src={guide.photoURL || "https://i.ibb.co/4f3QW4J/user.png"}
@@ -40,7 +40,7 @@ const ChooseYourTourGuides = () => {
                                    <p className="font-semibold">{guide.displayName}</p>
                                    <p className="text-sm text-gray-500">{guide.email}</p>
                               </div>
-                              <button className='text-sm mt-2 flex items-center gap-2'>View Details <IoIosArrowRoundForward /></button>
+                              <button className='text-sm mt-2 hover:font-bold transition duration-200 tran flex items-center gap-2'>View Details <IoIosArrowRoundForward /></button>
                          </div>
                     ))}
                </div>

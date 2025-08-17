@@ -23,14 +23,15 @@ const OurPackages = () => {
       <div className="grid gap-6 md:grid-cols-3 lg:grid-cols-4 sm:grid-cols-2">
         {packages.map((pkg) => (
           <div key={pkg._id} className="card bg-white shadow-md rounded-xl overflow-hidden">
-            <img src={pkg.images?.[0]} alt="story" className="h-48 w-full object-cover" />
+            <img
+             src={pkg.images?.[0]} alt="story" className="h-48 w-full object-cover transform transition-transform duration-500 hover:scale-110" />
             <div className="p-4">
               <h3 className="text-lg font-semibold">{pkg.name}</h3>
               <p className="text-sm text-gray-600 mb-2">Type: {pkg.personType || 'per person'}</p>
               <p className="text-xl font-bold text-[#007777]">৳{pkg.price}</p>
               <button
                 onClick={() => navigate(`/PackageDetails/${pkg._id}`)}
-                className="mt-3 btn btn-sm botder-[#007777] text-white bg-[#007777]"
+                className="mt-3 btn btn-sm botder-[#007777] text-white bg-[#007777] hover:bg-[#0f5e5e]"
               >
                 View Package
               </button>

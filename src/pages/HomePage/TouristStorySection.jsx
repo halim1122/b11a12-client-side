@@ -46,7 +46,7 @@ const TouristStorySection = () => {
 
   return (
     <motion.div
-      className="max-w-7xl mx-auto text-center px-4 py-10"
+      className="max-w-7xl mx-auto text-center px-4 py-10 bg-gray-100 rounded-2xl"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
