@@ -93,7 +93,7 @@ const ManageProfile = () => {
      };
 
      return (
-          <div className="max-w-4xl lg:max-w-5xl mx-auto p-4 sm:p-6">
+          <div className="max-w-4xl lg:max-w-5xl mx-auto min-h-screen p-4 sm:p-6">
                <h1 className="text-2xl sm:text-3xl font-semibold mb-4 text-center sm:text-left">
                     Welcome, {dbUser.displayName}!
                </h1>

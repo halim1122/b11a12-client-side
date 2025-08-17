@@ -57,7 +57,7 @@ const TouristStorySection = () => {
         transition={{ duration: 0.6 }}
         className="mb-6"
       >
-        <h2 className="text-2xl sm:text-3xl font-semibold text-[#007777]">Tourist Stories</h2>
+        <h2 className="text-3xl sm:text-3xl font-bold text-[#007777]">Tourist Stories</h2>
       </motion.div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">

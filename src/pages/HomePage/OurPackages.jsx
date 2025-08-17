@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import LoadingSpinner from "../../Sheared/Loading/LoadingSpinner";
 import useAxios from "../../Hook/useAxios";
 
@@ -18,7 +18,7 @@ const OurPackages = () => {
   if (isLoading) return <LoadingSpinner/>;
 
   return (
-    <section className="max-w-7xl mx-auto px-4 py-10">
+    <section className="max-w-7xl mx-auto px-4 pt-10">
       <h2 className="text-2xl md:text-3xl font-bold text-center mb-6 text-[#007777]">Our Packages</h2>
       <div className="grid gap-6 md:grid-cols-3 lg:grid-cols-4 sm:grid-cols-2">
         {packages.map((pkg) => (
@@ -38,6 +38,9 @@ const OurPackages = () => {
             </div>
           </div>
         ))}
+      </div>
+      <div className="flex justify-center" >
+      <Link to='/allTrips' className="btn mt-5 text-[#007777] border border-[#007777] hover:bg-[#007777] hover:text-white duration-100 transition">All Packages</Link>
       </div>
     </section>
   );

@@ -75,8 +75,8 @@ const AddPackages = () => {
      };
 
      return (
-          <div className="max-w-3xl mx-auto px-4 py-6">
-               <h2 className="text-2xl font-semibold mb-6 text-center">Add New Tour Package</h2>
+          <div className="max-w-4xl mx-auto px-4 py-6 border border-gray-200 shadow-2xl rounded-xl">
+               <h2 className="text-3xl font-bold mb-6 text-[#007777] text-center">Add New Tour Package</h2>
                <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
                     {/* Tour Name */}
                     <div>

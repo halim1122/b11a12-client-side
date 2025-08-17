@@ -2,7 +2,7 @@ import { FaGithub, FaGlobe } from "react-icons/fa";
 import { FaSquareTwitter } from "react-icons/fa6";
 const AboutUs = () => {
      return (
-          <div className="max-w-5xl mx-auto mt-8 md:mt-20 p-6 text-gray-800">
+          <div className="max-w-7xl min-h-screen mx-auto mt-8 md:mt-20 p-6 text-gray-800">
                <h1 className="text-3xl font-bold mb-4 text-[#007777] text-center">About the Developer</h1>
 
                <div className="bg-white shadow-md rounded-lg p-6">

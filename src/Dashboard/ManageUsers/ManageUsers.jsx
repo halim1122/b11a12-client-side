@@ -2,6 +2,7 @@ import { useState } from "react";
 import Select from "react-select";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../Hook/useAxiosSecure";
+import LoadingSpinner from "../../Sheared/Loading/LoadingSpinner";
 
 const ManageUsers = () => {
   const axiosInstance = useAxiosSecure();
@@ -39,7 +40,7 @@ const ManageUsers = () => {
   };
 
   return (
-    <div className="p-4 md:p-8 bg-white rounded-lg shadow max-w-7xl mx-auto">
+    <div className="p-4 md:p-8 bg-white min-h-screen rounded-lg shadow max-w-7xl mx-auto">
       <h2 className="text-2xl font-bold text-[#007777] mb-6 text-center">Manage Users</h2>
 
       <div className="flex flex-col md:flex-row items-center gap-4 mb-6">
@@ -94,7 +95,7 @@ const ManageUsers = () => {
             ))}
           </tbody>
         </table>
-        {isLoading && <p className="text-center py-4 text-[#007777]">Loading users...</p>}
+        {isLoading && <LoadingSpinner/>}
       </div>
     </div>
   );
