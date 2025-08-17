@@ -2,9 +2,10 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import ManageProfile from '../ManageProfile/ManageProfile';
 import useAuthContext from '../../Hook/useAuthContext';
+import TopRatedPackagesChart from '../../pages/TopRatedPackagesChart/TopRatedPackagesChart';
 
 const axiosInstance = axios.create({
-     baseURL:'https://tourist-for-server-site.vercel.app',
+     baseURL: 'http://localhost:5000',
 });
 
 
@@ -15,17 +16,17 @@ const fetchStat = async (url) => {
 
 const ManageProfileAdmin = () => {
 
-     const {user} = useAuthContext();
+     const { user } = useAuthContext();
 
-          const { data: admin = {}, isLoading} = useQuery({
-               queryKey: ["userRole", user?.email],
-               queryFn: async () => {
-                    const res = await axiosInstance.get(`/users/${user.email}`);
-                    return res.data;
-               },
-               enabled: !!user?.email
-          });
-     
+     const { data: admin = {}, isLoading } = useQuery({
+          queryKey: ["userRole", user?.email],
+          queryFn: async () => {
+               const res = await axiosInstance.get(`/users/${user.email}`);
+               return res.data;
+          },
+          enabled: !!user?.email
+     });
+
 
 
      const totalPayment = useQuery({
@@ -55,6 +56,7 @@ const ManageProfileAdmin = () => {
           <div className="max-w-4xl mx-auto p-6 bg-white rounded shadow">
                <h2 className="text-2xl font-bold mb-4">Manage Profile</h2>
                <p className="mb-2">Welcome, {admin.displayName || admin.email}!</p>
+               <ManageProfile></ManageProfile>
 
                <div className="grid grid-cols-2 gap-4 mb-6">
                     <div className="bg-green-100 p-4 rounded">
@@ -78,8 +80,6 @@ const ManageProfileAdmin = () => {
                          <p>{totalStories.data || 0}</p>
                     </div>
                </div>
-<ManageProfile></ManageProfile>
-               
           </div>
      );
 };

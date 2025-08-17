@@ -6,6 +6,7 @@ import useAuthContext from "../../Hook/useAuthContext";
 import LoadingSpinner from "../../Sheared/Loading/LoadingSpinner";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../Hook/useAxiosSecure";
+import TopRatedPackagesChart from "../../pages/TopRatedPackagesChart/TopRatedPackagesChart";
 
 const ManageProfile = () => {
      const { user } = useAuthContext();
@@ -30,12 +31,12 @@ const ManageProfile = () => {
                Swal.fire({
                     position: "top-center",
                     icon: "success",
-                    title: `Welcome, ${user.displayName}`,
+                    title: `Welcome, ${dbUser.displayName}`,
                     showConfirmButton: false,
                     timer: 1500,
                });
           }
-     }, [user]);
+     }, [dbUser,user]);
 
      if (!user || isLoading) {
           return <LoadingSpinner />;
@@ -114,7 +115,7 @@ const ManageProfile = () => {
                </div>
 
                {/* Buttons */}
-               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center sm:justify-start">
+               <div className="flex flex-col sm:flex-row gap-3 mb-10 sm:gap-4 justify-center sm:justify-start">
                     <button
                          onClick={() => setModalOpen(true)}
                          className="btn bg-[#007777] text-white w-full sm:w-auto"
@@ -203,6 +204,7 @@ const ManageProfile = () => {
                          </div>
                     </div>
                )}
+               <TopRatedPackagesChart/>
           </div>
      );
 };
