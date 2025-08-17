@@ -20,7 +20,7 @@ const OurPackages = () => {
   return (
     <section className="max-w-7xl mx-auto px-4 py-10">
       <h2 className="text-2xl md:text-3xl font-bold text-center mb-6 text-[#007777]">Our Packages</h2>
-      <div className="grid gap-6 md:grid-cols-3 sm:grid-cols-2">
+      <div className="grid gap-6 md:grid-cols-3 lg:grid-cols-4 sm:grid-cols-2">
         {packages.map((pkg) => (
           <div key={pkg._id} className="card bg-white shadow-md rounded-xl overflow-hidden">
             <img src={pkg.images?.[0]} alt="story" className="h-48 w-full object-cover" />
