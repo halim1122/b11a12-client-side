@@ -26,7 +26,7 @@ const TopRatingPackages = () => {
      const topRated = data.packages.filter(pkg => parseFloat(Math.floor(pkg.rating)) === parseFloat(5));
 
      return (
-          <section className="max-w-7xl mx-auto bg-gray-100 rounded-2xl p-4 mb-24">
+          <section className="max-w-7xl mx-auto bg-gray-100 rounded-2xl p-4 mb-20">
                <h2 className="text-2xl md:text-3xl font-bold text-center mb-6 text-[#007777]">
                     Top Rated Packages
                </h2>

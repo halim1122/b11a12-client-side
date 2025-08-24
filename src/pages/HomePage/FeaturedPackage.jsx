@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+// eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from "framer-motion";
 
 const FeaturedPackages = () => {
@@ -48,7 +49,7 @@ const FeaturedPackages = () => {
      const [selectedPackage, setSelectedPackage] = useState(null);
 
      return (
-          <div className="max-w-7xl mx-auto px-4 pb-26">
+          <div className="max-w-7xl mx-auto p-4 mb-20">
                <h2 className="text-4xl text-[#007777] font-bold mb-8 text-center">Featured Packages</h2>
                <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
                     {featuredPackages.map((pkg) => (

@@ -1,186 +1,265 @@
 import { useQuery } from "@tanstack/react-query";
 import {
-     FaStar,
-     FaRegStar,
-     FaPlane,
-     FaWifi,
-     FaTv,
-     FaSwimmingPool,
-     FaDumbbell,
-     FaUtensils,
+  FaStar,
+  FaRegStar,
+  FaPlane,
+  FaWifi,
+  FaTv,
+  FaSwimmingPool,
+  FaDumbbell,
+  FaUtensils,
 } from "react-icons/fa";
 import { AiFillHeart } from "react-icons/ai";
 import { Link } from "react-router";
 import useAxios from "../../Hook/useAxios";
 import { useState } from "react";
+// eslint-disable-next-line no-unused-vars
+import { motion } from "framer-motion";
 
-// Star render function
+// ⭐ Star render function
 const renderStars = (rating) => {
-     const totalStars = 5;
-     const filled = Math.floor(rating);
-     const empty = totalStars - filled;
+  const totalStars = 5;
+  const filled = Math.floor(rating);
+  const empty = totalStars - filled;
 
-     return (
-          <>
-               {[...Array(filled)].map((_, i) => (
-                    <FaStar key={`full-${i}`} className="text-yellow-500" />
-               ))}
-               {[...Array(empty)].map((_, i) => (
-                    <FaRegStar key={`empty-${i}`} className="text-yellow-500" />
-               ))}
-          </>
-     );
+  return (
+    <>
+      {[...Array(filled)].map((_, i) => (
+        <FaStar key={`full-${i}`} className="text-yellow-500" />
+      ))}
+      {[...Array(empty)].map((_, i) => (
+        <FaRegStar key={`empty-${i}`} className="text-yellow-500" />
+      ))}
+    </>
+  );
 };
 
-// Skeleton card component
+// 🔄 Skeleton card (loading state)
 const SkeletonCard = () => (
-     <div className="flex flex-col md:flex-row bg-white rounded-lg shadow-md overflow-hidden w-full md:h-[250px] animate-pulse">
-          <div className="md:w-1/3 w-full h-[200px] bg-gray-300"></div>
-          <div className="flex-1 p-4 flex justify-between w-full box-border">
-               <div className="flex-1 space-y-2">
-                    <div className="h-4 bg-gray-300 rounded w-1/3"></div>
-                    <div className="h-6 bg-gray-300 rounded w-1/2"></div>
-                    <div className="h-4 bg-gray-300 rounded w-2/3 mt-2"></div>
-               </div>
-               <div className="md:w-[130px] hidden md:flex flex-col justify-center items-center gap-2 p-4 border-t md:border-t-0 md:border-l">
-                    <div className="h-5 w-16 bg-gray-300 rounded"></div>
-                    <div className="h-3 w-20 bg-gray-300 rounded"></div>
-               </div>
-          </div>
-     </div>
+  <div className="flex flex-col md:flex-row bg-white rounded-lg shadow-md overflow-hidden w-full md:h-[250px] animate-pulse">
+    <div className="md:w-1/3 w-full h-[200px] bg-gray-300"></div>
+    <div className="flex-1 p-4 flex justify-between w-full box-border">
+      <div className="flex-1 space-y-2">
+        <div className="h-4 bg-gray-300 rounded w-1/3"></div>
+        <div className="h-6 bg-gray-300 rounded w-1/2"></div>
+        <div className="h-4 bg-gray-300 rounded w-2/3 mt-2"></div>
+      </div>
+      <div className="md:w-[130px] hidden md:flex flex-col justify-center items-center gap-2 p-4 border-t md:border-t-0 md:border-l">
+        <div className="h-5 w-16 bg-gray-300 rounded"></div>
+        <div className="h-3 w-20 bg-gray-300 rounded"></div>
+      </div>
+    </div>
+  </div>
 );
 
 const AllTrips = () => {
-     const axiosInstance = useAxios();
-     const [currentPage, setCurrentPage] = useState(1);
-     const [sortPrice, setSortPrice] = useState(""); 
-     const limit = 10;
+  const axiosInstance = useAxios();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [sortPrice, setSortPrice] = useState("");
+  const limit = 10;
 
-     const { data, isLoading } = useQuery({
-          queryKey: ["packages", currentPage, sortPrice],
-          queryFn: async () => {
-               const res = await axiosInstance.get(`/packages?page=${currentPage}&limit=${limit}&sort=${sortPrice}`);
-               return res.data;
-          },
-     });
+  const { data, isLoading } = useQuery({
+    queryKey: ["packages", currentPage, sortPrice],
+    queryFn: async () => {
+      const res = await axiosInstance.get(
+        `/packages?page=${currentPage}&limit=${limit}&sort=${sortPrice}`
+      );
+      return res.data;
+    },
+  });
 
-     const packages = data?.packages || [];
-     const total = data?.total || 0;
-     const totalPages = Math.ceil(total / limit);
+  const packages = data?.packages || [];
+  const total = data?.total || 0;
+  const totalPages = Math.ceil(total / limit);
 
-     return (
-          <div className="max-w-7xl mx-auto overflow-hidden px-4 md:px-6 mt-10 md:mt-20">
-               {/* Price Sort Selector */}
-               <div className="mb-6">
-                    <label htmlFor="priceSort" className="mr-2 font-medium text-gray-700">
-                         Sort by Price:
-                    </label>
-                    <select
-                         id="priceSort"
-                         value={sortPrice}
-                         onChange={(e) => setSortPrice(e.target.value)}
-                         className="border border-gray-300 rounded px-3 py-1 focus:outline-none focus:ring-2 focus:ring-[#007777]"
+  // 🎬 Animation variants
+  const cardVariants = {
+    hidden: { opacity: 0, y: 50, scale: 0.95 },
+    visible: { opacity: 1, y: 0, scale: 1 },
+  };
+
+  return (
+    <motion.div
+      className="max-w-7xl mx-auto overflow-hidden px-4 md:px-6 mt-10 md:mt-20"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.6 }}
+    >
+      {/* ✅ Price Sort Selector */}
+      <motion.div
+        className="mb-6 flex flex-wrap items-center gap-3"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <label
+          htmlFor="priceSort"
+          className="mr-2 font-medium text-gray-700 whitespace-nowrap"
+        >
+          Sort by Price:
+        </label>
+        <select
+          id="priceSort"
+          value={sortPrice}
+          onChange={(e) => setSortPrice(e.target.value)}
+          className="border border-gray-300 rounded px-3 py-1 focus:outline-none focus:ring-2 focus:ring-[#007777]"
+        >
+          <option value="">Default</option>
+          <option value="desc">Top Price</option>
+          <option value="asc">Low Price</option>
+        </select>
+      </motion.div>
+
+      {/* ✅ All Cards */}
+      <motion.div
+        className="space-y-6"
+        initial="hidden"
+        animate="visible"
+        transition={{ staggerChildren: 0.15 }}
+      >
+        {isLoading
+          ? Array.from({ length: limit }).map((_, idx) => (
+              <SkeletonCard key={idx} />
+            ))
+          : packages.map((pkg) => (
+              <motion.div
+                key={pkg._id}
+                variants={cardVariants}
+                transition={{ duration: 0.5 }}
+                whileHover={{ scale: 1.02 }}
+                className="flex flex-col md:flex-row bg-white rounded-lg shadow-md overflow-hidden w-full md:h-[250px]"
+              >
+                {/* ✅ Image Section */}
+                <div className="relative md:w-1/3 w-full h-[200px] md:h-full">
+                  <motion.img
+                    src={pkg.images?.[0]}
+                    alt={pkg.name}
+                    className="w-full h-full object-cover"
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ duration: 0.3 }}
+                  />
+                  <span className="absolute top-2 left-2 bg-green-600 text-white px-2 py-1 text-xs rounded shadow">
+                    {parseFloat(Math.floor(pkg.rating)) === 5
+                      ? "TOP RATED"
+                      : "MID RATED"}
+                  </span>
+                  <span className="absolute bottom-2 left-2 bg-black/50 text-white text-xs px-2 py-1 rounded flex items-center gap-1">
+                    <FaPlane /> Transfer
+                  </span>
+                  <AiFillHeart className="absolute top-2 right-2 text-red-500 text-xl cursor-pointer hover:scale-110 transition" />
+                </div>
+
+                {/* ✅ Info Section */}
+                <div className="flex-1 p-4 flex justify-between w-full box-border">
+                  <div className="flex-1 p-4 space-y-2">
+                    {/* Stars */}
+                    <div className="flex items-center gap-1 text-sm">
+                      {renderStars(pkg.rating)}
+                      <span className="text-gray-500 ml-2">
+                        ({pkg.rating})
+                      </span>
+                    </div>
+
+                    {/* Title */}
+                    <h2 className="text-xl font-bold uppercase">
+                      {pkg.name}
+                    </h2>
+
+                    {/* ✅ Mobile Price */}
+                    <div className="md:hidden mt-2">
+                      <div className="text-red-500 font-bold text-lg">
+                        ${pkg.price.toLocaleString()}
+                      </div>
+                      <Link
+                        to={`/PackageDetails/${pkg._id}`}
+                        className="btn w-full btn-sm bg-[#007777] text-white mt-2 hover:brightness-110"
+                      >
+                        Details
+                      </Link>
+                    </div>
+
+                    {/* ✅ Description + Icons (Desktop only) */}
+                    <div className="hidden md:block">
+                      <p className="text-sm text-gray-600 text-justify line-clamp-4">
+                        {pkg.description}...
+                      </p>
+                      <div className="flex gap-3 text-gray-600 text-lg mt-5 flex-wrap">
+                        <div className="p-2 rounded shadow hover:bg-base-200">
+                          <FaWifi title="Free Wi-Fi" />
+                        </div>
+                        <div className="p-2 rounded shadow hover:bg-base-200">
+                          <FaTv title="Cable TV" />
+                        </div>
+                        <div className="p-2 rounded shadow hover:bg-base-200">
+                          <FaSwimmingPool title="Swimming Pool" />
+                        </div>
+                        <div className="p-2 rounded shadow hover:bg-base-200">
+                          <FaDumbbell title="Gym" />
+                        </div>
+                        <div className="p-2 rounded shadow hover:bg-base-200">
+                          <FaUtensils title="Restaurant" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* ✅ Right Sidebar (Desktop only) */}
+                  <div className="md:w-[130px] hidden md:flex flex-col justify-center items-center gap-2 p-4 border-t md:border-t-0 md:border-l">
+                    <div className="text-red-500 font-bold text-xl">
+                      ${pkg.price.toLocaleString()}
+                    </div>
+                    <div className="text-gray-500 text-xs">
+                      *From/{pkg.personType ? pkg.personType : "per person"}
+                    </div>
+                    <Link
+                      to={`/PackageDetails/${pkg._id}`}
+                      className="btn btn-sm bg-[#007777] text-white mt-2 hover:brightness-110"
                     >
-                         <option value="">Default</option>
-                         <option value="desc">Top Price</option>
-                         <option value="asc">Low Price</option>
-                    </select>
-               </div>
+                      Details
+                    </Link>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+      </motion.div>
 
-               <div className="space-y-6">
-                    {isLoading
-                         ? Array.from({ length: limit }).map((_, idx) => <SkeletonCard key={idx} />)
-                         : packages.map((pkg) => (
-                              <div
-                                   key={pkg._id}
-                                   className="flex flex-col md:flex-row bg-white rounded-lg shadow-md overflow-hidden w-full md:h-[250px]"
-                              >
-                                   <div className="relative md:w-1/3 w-full h-[200px] md:h-full">
-                                        <img
-                                             src={pkg.images?.[0]}
-                                             alt={pkg.name}
-                                             className="w-full h-full object-cover"
-                                        />
-                                        <span className="absolute top-2 left-2 bg-green-600 text-white px-2 py-1 text-xs rounded shadow">
-                                             {parseFloat(Math.floor(pkg.rating)) === 5 ? 'TOP RATED' : 'MID RATED'}
-                                        </span>
-                                        <span className="absolute bottom-2 left-2 bg-black/50 text-white text-xs px-2 py-1 rounded flex items-center gap-1">
-                                             <FaPlane /> Transfer
-                                        </span>
-                                        <AiFillHeart className="absolute top-2 right-2 text-red-500 text-xl cursor-pointer" />
-                                   </div>
-
-                                   <div className="flex-1 p-4 flex justify-between w-full box-border">
-                                        <div className="flex-1 p-4 space-y-2">
-                                             <div className="flex items-center gap-1 text-sm">
-                                                  {renderStars(pkg.rating)}
-                                                  <span className="text-gray-500 ml-2">({pkg.rating})</span>
-                                             </div>
-                                             <h2 className="text-xl font-bold uppercase">{pkg.name}</h2>
-
-                                             <div className="md:hidden mt-2">
-                                                  <div className="text-red-500 font-bold text-lg">${pkg.price.toLocaleString()}</div>
-                                                  <Link to={`/PackageDetails/${pkg._id}`} className="btn w-full btn-sm bg-[#007777] text-white mt-2 hover:brightness-110">
-                                                       Details
-                                                  </Link>
-                                             </div>
-
-                                             <div className="hidden md:block">
-                                                  <p className="text-sm text-gray-600 text-justify line-clamp-4">
-                                                       {pkg.description}...
-                                                  </p>
-                                                  <div className="flex gap-3 text-gray-600 text-lg mt-5">
-                                                       <div className="p-2 rounded shadow hover:bg-base-200"><FaWifi title="Free Wi-Fi" /></div>
-                                                       <div className="p-2 rounded shadow hover:bg-base-200"><FaTv title="Cable TV" /></div>
-                                                       <div className="p-2 rounded shadow hover:bg-base-200"><FaSwimmingPool title="Swimming Pool" /></div>
-                                                       <div className="p-2 rounded shadow hover:bg-base-200"><FaDumbbell title="Gym" /></div>
-                                                       <div className="p-2 rounded shadow hover:bg-base-200"><FaUtensils title="Restaurant" /></div>
-                                                  </div>
-                                             </div>
-                                        </div>
-
-                                        <div className="md:w-[130px] hidden md:flex flex-col justify-center items-center gap-2 p-4 border-t md:border-t-0 md:border-l">
-                                             <div className="text-red-500 font-bold text-xl">
-                                                  ${pkg.price.toLocaleString()}
-                                             </div>
-                                             <div className="text-gray-500 text-xs">*From/{pkg.personType ? pkg.personType : 'per person'}</div>
-                                             <Link to={`/PackageDetails/${pkg._id}`} className="btn btn-sm bg-[#007777] text-white mt-2 hover:brightness-110">
-                                                  Details
-                                             </Link>
-                                        </div>
-                                   </div>
-                              </div>
-                         ))}
-               </div>
-
-               {/* Pagination Controls */}
-               <div className="flex justify-center items-center gap-2 mt-10">
-                    <button
-                         onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-                         className="btn btn-sm"
-                         disabled={currentPage === 1}
-                    >
-                         Prev
-                    </button>
-                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-                         <button
-                              key={page}
-                              onClick={() => setCurrentPage(page)}
-                              className={`btn btn-sm ${page === currentPage ? 'btn-primary' : 'btn-outline'}`}
-                         >
-                              {page}
-                         </button>
-                    ))}
-                    <button
-                         onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-                         className="btn btn-sm"
-                         disabled={currentPage === totalPages}
-                    >
-                         Next
-                    </button>
-               </div>
-          </div>
-     );
+      {/* ✅ Pagination Controls */}
+      <motion.div
+        className="flex justify-center items-center gap-2 mt-10 flex-wrap"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.3 }}
+      >
+        <button
+          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+          className="btn btn-sm"
+          disabled={currentPage === 1}
+        >
+          Prev
+        </button>
+        {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+          <button
+            key={page}
+            onClick={() => setCurrentPage(page)}
+            className={`btn btn-sm ${
+              page === currentPage ? "btn-primary" : "btn-outline"
+            }`}
+          >
+            {page}
+          </button>
+        ))}
+        <button
+          onClick={() =>
+            setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+          }
+          className="btn btn-sm"
+          disabled={currentPage === totalPages}
+        >
+          Next
+        </button>
+      </motion.div>
+    </motion.div>
+  );
 };
 
 export default AllTrips;

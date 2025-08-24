@@ -6,11 +6,11 @@ import ChooseYourTourGuides from './ChooseYourTourGuides';
 const TravelGuideSection = () => {
 
      return (
-    <section className="py-24 px-4 md:px-20">
+    <section className="py-10 bg-gray-100 mb-20 px-4 md:px-20">
       <h2 className="text-4xl font-bold text-center mb-10 text-[#007777]">Tourism & Travel Guide</h2>
 
       <Tabs>
-        <TabList className="flex justify-center gap-6 mb-8">
+        <TabList className="flex justify-center gap-6 ">
           <Tab className="btn btn-outline btn-accent">Our Packages</Tab>
           <Tab className="btn btn-outline btn-accent">Meet Our Tour Guides</Tab>
         </TabList>
