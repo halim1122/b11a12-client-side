@@ -22,7 +22,7 @@ const SocielGoogle = () => {
       }
 
       await axiosInstance.post('/users', userInfo);
-      // console.log(userRes.data)
+      console.log(userInfo)
       setUser(res.user)
       navigate(from, { replace: true });
     }).catch(() => {

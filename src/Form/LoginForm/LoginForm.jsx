@@ -3,17 +3,16 @@ import photo from '../../assets/ChatGPT Image Jul 11, 2025, 02_03_06 AM.png';
 import useAuthContext from '../../Hook/useAuthContext';
 import { Link, useLocation, useNavigate } from 'react-router';
 import Logo from '../../Sheared/Logo/Logo';
-import useAxiosSecure from '../../Hook/useAxiosSecure';
 import { useState } from 'react';
 import Swal from 'sweetalert2';
 
 const LoginForm = () => {
   const { register, getValues, formState: { errors }, handleSubmit } = useForm();
-  const { loginUser, googleLogin, PasswordReset, setUser } = useAuthContext();
+  const { loginUser, PasswordReset, setUser } = useAuthContext();
   const [emailError, setEmailError] = useState();
   const navigate = useNavigate();
   const location = useLocation();
-  const axiosInstance = useAxiosSecure();
+  // const axiosInstance = useAxiosSecure();
   const from = location.state?.from?.pathname || "/";
   const onSubmit = (data) => {
     loginUser(data.email, data.password)
@@ -32,50 +31,50 @@ const LoginForm = () => {
       });
   };
 
-  const handleGoogleLogin = async () => {
-    try {
-      const res = await googleLogin();
-      const user = res?.user;
+  // const handleGoogleLogin = async () => {
+  //   try {
+  //     const res = await googleLogin();
+  //     const user = res?.user;
 
-      if (!user?.email) {
-        throw new Error("User email not found from Google response.");
-      }
+  //     if (!user?.email) {
+  //       throw new Error("User email not found from Google response.");
+  //     }
 
-      const userInfo = {
-        email: user.email,
-        displayName: user.displayName || "Unknown",
-        photoURL: user.photoURL || "",
-        created_at: new Date().toISOString(),
-        last_login: new Date().toISOString(),
-      };
+  //     const userInfo = {
+  //       email: user.email,
+  //       displayName: user.displayName || "Unknown",
+  //       photoURL: user.photoURL || "",
+  //       created_at: new Date().toISOString(),
+  //       last_login: new Date().toISOString(),
+  //     };
 
-      // User info save to DB
-      await axiosInstance.post('/users', userInfo);
+  //     // User info save to DB
+  //     await axiosInstance.post('/users', userInfo);
 
-      // Save in context/state
-      setUser(user);
+  //     // Save in context/state
+  //     setUser(user);
 
-      // Navigate to previous location
-      navigate(from, { replace: true });
+  //     // Navigate to previous location
+  //     navigate(from, { replace: true });
 
-      // Show success message
-      Swal.fire({
-        position: "top-end",
-        icon: "success",
-        title: `Welcome, ${user.displayName || "User"}`,
-        showConfirmButton: false,
-        timer: 1000,
-      });
-    } catch (error) {
-      console.error("Google login failed:", error.message);
+  //     // Show success message
+  //     Swal.fire({
+  //       position: "top-end",
+  //       icon: "success",
+  //       title: `Welcome, ${user.displayName || "User"}`,
+  //       showConfirmButton: false,
+  //       timer: 1000,
+  //     });
+  //   } catch (error) {
+  //     console.error("Google login failed:", error.message);
 
-      Swal.fire({
-        icon: "error",
-        title: "Login failed",
-        text: error.message || "Something went wrong!",
-      });
-    }
-  };
+  //     Swal.fire({
+  //       icon: "error",
+  //       title: "Login failed",
+  //       text: error.message || "Something went wrong!",
+  //     });
+  //   }
+  // };
 
 
   const handleForget = () => {
@@ -104,7 +103,7 @@ const LoginForm = () => {
         <Logo />
       </div>
 
-      <div className="flex flex-col lg:flex-row items-center justify-center px-4 md:px-10 py-8 gap-6">
+      <div className="flex flex-col lg:flex-row md:items-center justify-center px-4 py-4 gap-6">
         <div className="flex-1 flex justify-center">
           <div className="w-full max-w-[300px]">
             <h1 className="font-extrabold text-2xl md:text-4xl text-center md:text-left">Welcome Back</h1>
@@ -147,17 +146,17 @@ const LoginForm = () => {
               </small>
             </p>
 
-            <div className="mt-4">
+            {/* <div className="mt-4">
               <div className="divider">OR</div>
               <button onClick={handleGoogleLogin} className="btn w-full bg-gray-200 text-black">
                 <svg aria-label="Google logo" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><g><path d="m0 0H512V512H0" fill="#fff"></path><path fill="#34a853" d="M153 292c30 82 118 95 171 60h62v48A192 192 0 0190 341"></path><path fill="#4285f4" d="m386 400a140 175 0 0053-179H260v74h102q-7 37-38 57"></path><path fill="#fbbc02" d="m90 341a208 200 0 010-171l63 49q-12 37 0 73"></path><path fill="#ea4335" d="m153 219c22-69 116-109 179-50l55-54c-78-75-230-72-297 55"></path></g></svg>
                 Login with Google
               </button>
-            </div>
+            </div> */}
           </div>
         </div>
 
-        <div className="flex-1 flex justify-center items-center bg-[#FAFDF0] py-10">
+        <div className="hidden md:flex-1 md:flex justify-center items-center bg-[#FAFDF0] py-10">
           <img
             src={photo}
             alt="Login Visual"

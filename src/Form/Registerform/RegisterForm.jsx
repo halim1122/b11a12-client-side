@@ -100,7 +100,7 @@ const RegisterForm = () => {
                     <Logo />
                </div>
 
-               <div className="flex flex-col lg:flex-row items-center justify-center px-4 md:px-10 py-6 gap-6">
+               <div className="flex flex-col lg:flex-row md:items-center justify-center px-4 md:px-10 py-6 gap-6">
 
                     <div className="flex-1 flex justify-center">
                          <div className="w-full max-w-[300px]">
@@ -176,14 +176,14 @@ const RegisterForm = () => {
                                         <Link to="/login" className="text-[#acd81d] underline">Login</Link>
                                    </small>
                               </p>
-
+{/* 
                               <div className="mt-4">
                                    <SocielGoogle />
-                              </div>
+                              </div> */}
                          </div>
                     </div>
 
-                    <div className="flex-1 flex justify-center items-center bg-[#FAFDF0] py-10">
+                    <div className="flex-1 hidden md:flex justify-center items-center bg-[#FAFDF0] py-10">
                          <img
                               src={photo}
                               alt="Login Visual"

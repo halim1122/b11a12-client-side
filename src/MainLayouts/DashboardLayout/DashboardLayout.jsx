@@ -34,7 +34,7 @@ const DashboardLayout = () => {
 
   if (isLoading) return <LoadingSpinner />
   refetch();
-  console.log(dbUser?.email,user?.email)
+  // console.log(dbUser?.email,user?.email)
   return (
     <div className="drawer lg:drawer-open">
       <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
