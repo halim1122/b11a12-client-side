@@ -116,7 +116,7 @@ const PaymentForm = () => {
 
      return (
           <div>
-               <form onSubmit={handleSubmit} className='space-y-4 bg-white p-6 rounded-xl shadow-md w-full max-w-md mx-auto'>
+               <form onSubmit={handleSubmit} className='space-y-4 bg-white min-h-screen p-6 rounded-xl shadow-md w-full max-w-md mx-auto'>
                     <CardElement className='p-2 border rounded'>
                          Pay for parcel pickup
                     </CardElement>

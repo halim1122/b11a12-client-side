@@ -1,12 +1,18 @@
 import { useQuery } from "@tanstack/react-query";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import useAxiosSecure from "../../Hook/useAxiosSecure";
 import LoadingSpinner from "../../Sheared/Loading/LoadingSpinner";
+import { useEffect } from "react";
 
 const TourGuidesSection = () => {
      const axiosInstance = useAxiosSecure();
      const navigate = useNavigate();
+  const location = useLocation(); // ✅ route location ধরলাম
 
+  // ✅ route change হলেই top এ স্ক্রল
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
      const { data: guides = [], isLoading } = useQuery({
           queryKey: ["tour-guides"],
           queryFn: async () => {

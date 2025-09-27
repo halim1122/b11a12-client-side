@@ -1,4 +1,4 @@
-import { NavLink, Outlet } from "react-router";
+import { NavLink, Outlet, useLocation } from "react-router";
 import Logo from "../../Sheared/Logo/Logo";
 import {
   FaHome,
@@ -17,12 +17,18 @@ import useAuthContext from "../../Hook/useAuthContext";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../Hook/useAxiosSecure";
 import LoadingSpinner from "../../Sheared/Loading/LoadingSpinner";
+import { useEffect } from "react";
 
 const DashboardLayout = () => {
 
   const { user } = useAuthContext();
   const axiosInstance = useAxiosSecure();
+  const location = useLocation(); // ✅ route location ধরলাম
 
+  // ✅ route change হলেই top এ স্ক্রল
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
   const { data: dbUser = {}, isLoading, refetch } = useQuery({
     queryKey: ["userRole", user?.email],
     queryFn: async () => {
@@ -101,73 +107,73 @@ const DashboardLayout = () => {
               </NavLink>
             </li>
             {dbUser.role === 'user' && <>
-            <li> {/*  manege profile */}
-              <NavLink
-                to="/dashboard/manageProfile"
-                className={({ isActive }) =>
-                  `flex items-center gap-2 px-3 py-2 rounded-md hover:bg-base-300 ${isActive ? "bg-[#007777] text-white" : ""
-                  }`
-                }
-              >
-                <FaUser /> Manage Profile
-              </NavLink>
-            </li>
-            <li>{/*  My Bookings */}
-              <NavLink
-                to="/dashboard/myBookings"
-                className={({ isActive }) =>
-                  `flex items-center gap-2 px-3 py-2 rounded-md hover:bg-base-300 ${isActive ? "bg-[#007777] text-white" : ""
-                  }`
-                }
-              >
-                <FaRegListAlt /> My Bookings
-              </NavLink>
-            </li>
-            <li> {/* Payment History */}
-              <NavLink
-                to="/dashboard/paymentHistory"
-                className={({ isActive }) =>
-                  `flex items-center gap-2 px-3 py-2 rounded-md hover:bg-base-300 ${isActive ? "bg-[#007777] text-white" : ""
-                  }`
-                }
-              >
-                <MdPayment /> Payment History
-              </NavLink>
-            </li>
-            <li>{/* Join As Tour Guide*/}
-              <NavLink
-                to="/dashboard/joinAsTourGuide"
-                className={({ isActive }) =>
-                  `flex items-center gap-2 px-3 py-2 rounded-md hover:bg-base-300 ${isActive ? "bg-[#007777] text-white" : ""
-                  }`
-                }
-              >
-                <FaUserTie /> Join As Tour Guide
-              </NavLink>
-            </li></>}
+              <li> {/*  manege profile */}
+                <NavLink
+                  to="/dashboard/manageProfile"
+                  className={({ isActive }) =>
+                    `flex items-center gap-2 px-3 py-2 rounded-md hover:bg-base-300 ${isActive ? "bg-[#007777] text-white" : ""
+                    }`
+                  }
+                >
+                  <FaUser /> Manage Profile
+                </NavLink>
+              </li>
+              <li>{/*  My Bookings */}
+                <NavLink
+                  to="/dashboard/myBookings"
+                  className={({ isActive }) =>
+                    `flex items-center gap-2 px-3 py-2 rounded-md hover:bg-base-300 ${isActive ? "bg-[#007777] text-white" : ""
+                    }`
+                  }
+                >
+                  <FaRegListAlt /> My Bookings
+                </NavLink>
+              </li>
+              <li> {/* Payment History */}
+                <NavLink
+                  to="/dashboard/paymentHistory"
+                  className={({ isActive }) =>
+                    `flex items-center gap-2 px-3 py-2 rounded-md hover:bg-base-300 ${isActive ? "bg-[#007777] text-white" : ""
+                    }`
+                  }
+                >
+                  <MdPayment /> Payment History
+                </NavLink>
+              </li>
+              <li>{/* Join As Tour Guide*/}
+                <NavLink
+                  to="/dashboard/joinAsTourGuide"
+                  className={({ isActive }) =>
+                    `flex items-center gap-2 px-3 py-2 rounded-md hover:bg-base-300 ${isActive ? "bg-[#007777] text-white" : ""
+                    }`
+                  }
+                >
+                  <FaUserTie /> Join As Tour Guide
+                </NavLink>
+              </li></>}
             {(dbUser.role === "tour-guide") && (<>
               <li> {/*  manege profile */}
-              <NavLink
-                to="/dashboard/managesProfile"
-                className={({ isActive }) =>
-                  `flex items-center gap-2 px-3 py-2 rounded-md hover:bg-base-300 ${isActive ? "bg-[#007777] text-white" : ""
-                  }`
-                }
-              >
-                <FaUser /> Manage Profile
-              </NavLink>
-            </li>
+                <NavLink
+                  to="/dashboard/managesProfile"
+                  className={({ isActive }) =>
+                    `flex items-center gap-2 px-3 py-2 rounded-md hover:bg-base-300 ${isActive ? "bg-[#007777] text-white" : ""
+                    }`
+                  }
+                >
+                  <FaUser /> Manage Profile
+                </NavLink>
+              </li>
               <li> {/* My Assigned Tour*/}
-              <NavLink
-                to="/dashboard/myAssignedTour"
-                className={({ isActive }) =>
-                  `flex items-center gap-2 px-3 py-2 rounded-md hover:bg-base-300 ${isActive ? "bg-[#007777] text-white" : ""
-                  }`
-                }
-              >
-                <FaBook /> My Assigned Tour
-              </NavLink>
-            </li></>)}
+                <NavLink
+                  to="/dashboard/myAssignedTour"
+                  className={({ isActive }) =>
+                    `flex items-center gap-2 px-3 py-2 rounded-md hover:bg-base-300 ${isActive ? "bg-[#007777] text-white" : ""
+                    }`
+                  }
+                >
+                  <FaBook /> My Assigned Tour
+                </NavLink>
+              </li></>)}
             {dbUser.role === "admin" && <><li>{/*Manage Profile A*/}
               <NavLink
                 to="/dashboard/manageProfileAdmin"
@@ -179,39 +185,39 @@ const DashboardLayout = () => {
                 <FaUsersCog /> Manage Profile
               </NavLink>
             </li>
-            <li>{/* Add Package A*/}
-              <NavLink
-                to="/dashboard/addPackage"
-                className={({ isActive }) =>
-                  `flex items-center gap-2 px-3 py-2 rounded-md hover:bg-base-300 ${isActive ? "bg-[#007777] text-white" : ""
-                  }`
-                }
-              >
-                <IoIosAddCircle /> Add Package
-              </NavLink>
-            </li>
-            <li>{/*  Manage Users A*/}
-              <NavLink
-                to="/dashboard/manageUsers"
-                className={({ isActive }) =>
-                  `flex items-center gap-2 px-3 py-2 rounded-md hover:bg-base-300 ${isActive ? "bg-[#007777] text-white" : ""
-                  }`
-                }
-              >
-                <FaUsersCog /> Manage Users
-              </NavLink>
-            </li>
-            <li>{/*  Manage Candidates A*/}
-              <NavLink
-                to="/dashboard/manageCandidates"
-                className={({ isActive }) =>
-                  `flex items-center gap-2 px-3 py-2 rounded-md hover:bg-base-300 ${isActive ? "bg-[#007777] text-white" : ""
-                  }`
-                }
-              >
-                <TbUserSearch /> Manage Candidates
-              </NavLink>
-            </li></>}
+              <li>{/* Add Package A*/}
+                <NavLink
+                  to="/dashboard/addPackage"
+                  className={({ isActive }) =>
+                    `flex items-center gap-2 px-3 py-2 rounded-md hover:bg-base-300 ${isActive ? "bg-[#007777] text-white" : ""
+                    }`
+                  }
+                >
+                  <IoIosAddCircle /> Add Package
+                </NavLink>
+              </li>
+              <li>{/*  Manage Users A*/}
+                <NavLink
+                  to="/dashboard/manageUsers"
+                  className={({ isActive }) =>
+                    `flex items-center gap-2 px-3 py-2 rounded-md hover:bg-base-300 ${isActive ? "bg-[#007777] text-white" : ""
+                    }`
+                  }
+                >
+                  <FaUsersCog /> Manage Users
+                </NavLink>
+              </li>
+              <li>{/*  Manage Candidates A*/}
+                <NavLink
+                  to="/dashboard/manageCandidates"
+                  className={({ isActive }) =>
+                    `flex items-center gap-2 px-3 py-2 rounded-md hover:bg-base-300 ${isActive ? "bg-[#007777] text-white" : ""
+                    }`
+                  }
+                >
+                  <TbUserSearch /> Manage Candidates
+                </NavLink>
+              </li></>}
             <li>{/*  Manage Stories*/}
               <NavLink
                 to="/dashboard/manageStories"

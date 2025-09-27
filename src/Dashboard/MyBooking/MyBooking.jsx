@@ -70,7 +70,7 @@ const MyBooking = () => {
                timeStyle: "short",
           });
      };
-
+refetch()
      return (
           <div className="w-full overflow-x-auto min-h-screen">
                {bookings.length === 0 && <p className='text-gray-500 min-h-screen text-2xl md:text-4xl text-center mt-10 md:mt-24'>No Booking Any Package</p>}

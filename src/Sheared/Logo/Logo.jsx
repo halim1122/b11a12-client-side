@@ -5,7 +5,7 @@ const Logo = () => {
           <Link to='/'>
                <div className='flex gap-0'>
                <img className='w-5 md:w-6 lg:w-8' src={Logos} alt="" />
-               <h1 className='dancing font-medium text-lg lg:font-extrabold lg:text-2xl'>Wanderora</h1>
+               <h1 className='dancing font-medium text-lg lg:font-extrabold lg:text-2xl'>Tour-Hub</h1>
           </div>
           </Link>
      );

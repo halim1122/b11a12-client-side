@@ -1,8 +1,8 @@
-import { useNavigate, useParams } from "react-router";
+import { useLocation, useNavigate, useParams } from "react-router";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../Hook/useAxiosSecure";
 import LoadingSpinner from "../../Sheared/Loading/LoadingSpinner";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MdArrowRight } from "react-icons/md";
 import TourGuidesSection from "../TourGuidesSection/TourGuidesSection";
 
@@ -12,7 +12,14 @@ const PackageDetailsPage = () => {
      const axiosInstance = useAxiosSecure();
      const [activeStoryImages, setActiveStoryImages] = useState([]);
      const [openModal, setOpenModal] = useState(false);
+     const location = useLocation(); // ✅ route location ধরলাম
 
+     // ✅ route change হলেই top এ স্ক্রল
+     useEffect(() => {
+          window.scrollTo(0, 0);
+     }, [location.pathname]);
+
+     
      const { data: pkg = {}, isLoading } = useQuery({
           queryKey: ["package", id],
           queryFn: async () => {

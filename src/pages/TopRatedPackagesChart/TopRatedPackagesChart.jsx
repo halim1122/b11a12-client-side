@@ -11,12 +11,19 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import { useLocation } from "react-router";
+import { useEffect } from "react";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const TopRatedPackagesChart = () => {
   const axiosInstance = useAxios();
+  const location = useLocation(); // ✅ route location ধরলাম
 
+  // ✅ route change হলেই top এ স্ক্রল
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
   const { data, isLoading } = useQuery({
     queryKey: ["topRatedPackages"],
     queryFn: async () => {

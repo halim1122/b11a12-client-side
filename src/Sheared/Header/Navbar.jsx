@@ -1,23 +1,25 @@
 // Navbar.jsx
-import { useEffect, useState } from "react";
-import { Link, NavLink, useNavigate } from "react-router";
+import { Link, NavLink, useNavigate, useLocation } from "react-router"; // <- router-dom হতে হবে
+import { useEffect } from "react";
 import useAuthContext from "../../Hook/useAuthContext";
 import Logo from "../Logo/Logo";
 import Container from "../Container/Containar";
 import { FiLogIn, FiLogOut } from "react-icons/fi";
+
 const Navbar = () => {
   const { user, signOutUser } = useAuthContext();
   const navigate = useNavigate();
-  const [scrolled, setScrolled] = useState(false);
+  const location = useLocation(); // ✅ route location ধরলাম
 
+  // ✅ route change হলেই top এ স্ক্রল
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
 
   const handleLogout = () => {
-    signOutUser().then(() => navigate("/login")).catch(console.error);
+    signOutUser()
+      .then(() => navigate("/login"))
+      .catch(console.error);
   };
 
   const navLinks = (
@@ -31,7 +33,7 @@ const Navbar = () => {
   );
 
   return (
-    <div className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 font-bold ${scrolled ? ' font-medium bg-white shadow-md' : 'bg-transparent text-white'}`}>
+    <div className="fixed top-0 left-0 w-full z-50 transition-all duration-300 font-bold bg-white">
       <Container>
         <div className="navbar max-w-7xl mx-auto px-4 py-3">
           <div className="navbar-start">
